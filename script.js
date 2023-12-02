@@ -58,6 +58,15 @@ setListners();
 
 gameLoop();
 
+// Here is the main game loop. When the game loop runs,
+// it first checks to see if the player has already played
+// 3 rounds. If this is the case, it will post game over and the score.
+// Then it hides the divs so the player can't click them.
+// If the player still as rounds to play, the game loop begins
+// by scrambling the cards. It then assigns a card type to each
+// of the card elements (cardDiv0 etc.)
+// After this is done, it adds one to the rounds played tracker.
+
 function gameLoop() {
   if (roundsPlayed < 3) {
     scrambleCards();
@@ -95,21 +104,24 @@ function setListners() {
 
 // Here is the handleClick function. This function takes whatever text has been
 // randomly assigned to a div, and compares it to the string "SUN" when the
-// div is clicked. So if cardDiv0, for example, has been assigned the string
-// "Rain", handleClick will receive "cardDiv0", and see if cardDiv0.textContent === "SUN".
-// Because this returns false, it will console.log "Wrong!".
-//    If it is "SUN", then we add one point to the points variable.
-// After either of these is done, we execute gameLoop(); again. This is what
-// creates the function inside a function (because right now, the previous gameLoop is
-// still running.) The reason for this is that if we had put everything in a for-loop,
-// the for-loop wouldn't stop to wait and see if the event listeners had been clicked. It
-// would just finish running until the game is over, before the player even has a chance to
-// do anything.
+// div is clicked. .
 
 function handleClick(checkedCard) {
+  // If it is "SUN", then we add one point to the points variable.
+  // After either of these is done, we execute gameLoop(); again. This is what
+  // creates the function inside a function (because right now, the previous gameLoop is
+  // still running.) The reason for this is that if we had put everything in a for-loop,
+  // the for-loop wouldn't stop to wait and see if the event listeners had been clicked. It
+  // would just finish running until the game is over, before the player even has a chance to
+  // do anything.
+
   if (checkedCard.textContent.toUpperCase() === "SUN") {
     points++;
     console.log("Correct guess!");
+
+    // If cardDiv0, for example, has been assigned the string
+    // "Rain", handleClick will receive "cardDiv0", and see if cardDiv0.textContent === "SUN".
+    // Because this returns false, it will console.log "Wrong!"
   } else {
     console.log("Wrong!");
   }
