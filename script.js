@@ -16,14 +16,16 @@
 // if it is the right card is The Sun card --> 1 point
 
 //------------------------------------------------
-// Here we get form from, select and input from html document
+// Get HTML elements for player form, select, input, and leaderboard
 let playerFormEl = document.querySelector("#playerName");
 let playerIconsEl = document.querySelector("#playerIcons");
 let inputPlayerEl = document.querySelector(".input-player");
 let playerInfo = {};
 let leaderBoardEl = document.querySelector("#leaderBoard");
 
+// Function to retrieve player information from the form
 function getPlayer() {
+  // Extract player information from the form elements
   playerInfo = {
     icons: playerIconsEl.querySelector(`option[value=${playerIconsEl.value}]`)
       .textContent,
@@ -33,23 +35,24 @@ function getPlayer() {
   return playerInfo;
 }
 
+// Event listener for player form submission
 playerFormEl.addEventListener("submit", function (e) {
   e.preventDefault();
-  getPlayer();
-  playerFormEl.classList.add("hide-input");
+  getPlayer(); // Get player info
+  playerFormEl.classList.add("hide-input"); // Hide the player input form
 });
 
+// Function to retrieve leaderboard data from local storage
 function getLeaderboard() {
   let players = [];
+
   if (localStorage.getItem("players")) {
-    // usiamo try per evitare che in caso ci sia qualcosa di non corretto in localstorage
-    // il gioco non crash
+    // Use try-catch to prevent crashes if local storage data is not valid JSON
     try {
       const playersInLocalStorage = JSON.parse(localStorage.getItem("players"));
-      if (
-        // qui controlliamo che localstorage contiene un array
-        Array.isArray(playersInLocalStorage)
-      ) {
+
+      // Check if the data in local storage is an array
+      if (Array.isArray(playersInLocalStorage)) {
         players = playersInLocalStorage;
       }
     } catch (err) {}
@@ -57,19 +60,22 @@ function getLeaderboard() {
   return players;
 }
 
+// Function to save player's score to the leaderboard in local storage
 function savePlayerScore() {
-  playerInfo.score = points;
+  playerInfo.score = points; // Assuming 'points' is a global variable
   let players = getLeaderboard();
 
+  // Add the current player's info to the leaderboard
   players.push(playerInfo);
   localStorage.setItem("players", JSON.stringify(players));
 }
 
+// Function to display the leaderboard on the webpage
 function showLeaderBoard() {
-  // prendi i giocatori
+  // Retrieve players from the leaderboard
   let playersArray = getLeaderboard();
 
-  // ordinare per punti
+  // Sort players by score in descending order
   playersArray.sort((a, b) => {
     if (a.score < b.score) {
       return 1;
@@ -80,31 +86,40 @@ function showLeaderBoard() {
     }
   });
 
-  // limitare 4 / 5
+  // Limit the displayed players to 4
   playersArray = playersArray.slice(0, 4);
-  console.log(playersArray);
+  console.log("playersArray", playersArray);
+
+  // Clear the existing leaderboard content
   leaderBoardEl.innerHTML = "";
-  // ciclo nell'oggetto
-  // mi prendo gli elementi
-  // per ogni elemento aggiungo un nodo al dom
+
+  // Iterate through the player data and create HTML elements to display on the leaderboard
   for (let player of playersArray) {
-    // non fare cosi perchè https://owasp.org/www-community/attacks/xss/
-    // const li = `<li><span class="icon">${player.icons}</span><span class="name">${player.name}</span><span class="score">${player.score}</span></li>`;
-    // leaderBoardEl.innerHTML += li;
+    /*  non fare cosi perchè https://owasp.org/www-community/attacks/xss/
+    const li = `<li><span class="icon">${player.icons}</span><span class="name">${player.name}</span><span class="score">${player.score}</span></li>`;
+    leaderBoardEl.innerHTML += li; */
+
+    // Create li element for each player
     const li = document.createElement("li");
+    // Create span element for player icon
     const spanIcon = document.createElement("span");
     spanIcon.textContent = player.icons;
     spanIcon.className = "leaderBoard-icon";
     li.appendChild(spanIcon);
+
+    // Create span element for player name
     const spanName = document.createElement("span");
     spanName.textContent = player.name;
     spanName.className = "leaderBoard-name";
     li.appendChild(spanName);
+
+    // Create span element for player score
     const spanScore = document.createElement("span");
     spanScore.textContent = player.score;
     spanScore.className = "leaderBoard-score";
     li.appendChild(spanScore);
 
+    // Append the li element to the leaderboard
     leaderBoardEl.appendChild(li);
   }
 }
@@ -146,9 +161,9 @@ let roundsPlayed = 0;
 
 setListners();
 
+showLeaderBoard(); // This line is added to display the leaderboard before the game starts
 // When we have set up the event listners for the cards, we
 // start the main game loop:
-showLeaderBoard();
 gameLoop();
 
 // Here is the main game loop. When the game loop runs,
@@ -169,8 +184,8 @@ function gameLoop() {
     console.log(`Game over. You scored ${points} out of 3!`);
     savePlayerScore();
     removeButtons();
-    // show leaderBoard
-    showLeaderBoard();
+
+    showLeaderBoard(); // // This line is added to display the leaderboard with the new player
   }
 }
 
