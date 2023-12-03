@@ -16,11 +16,100 @@
 // if it is the right card is The Sun card --> 1 point
 
 //------------------------------------------------
-// Here we get the element input from html document
+// Here we get form from, select and input from html document
+let playerFormEl = document.querySelector("#playerName");
+let playerIconsEl = document.querySelector("#playerIcons");
 let inputPlayerEl = document.querySelector(".input-player");
+let playerInfo = {};
+let leaderBoardEl = document.querySelector("#leaderBoard");
+
+function getPlayer() {
+  playerInfo = {
+    icons: playerIconsEl.querySelector(`option[value=${playerIconsEl.value}]`)
+      .textContent,
+    name: inputPlayerEl.value,
+    score: 0,
+  };
+  return playerInfo;
+}
+
+playerFormEl.addEventListener("submit", function (e) {
+  e.preventDefault();
+  getPlayer();
+  playerFormEl.classList.add("hide-input");
+});
+
+function getLeaderboard() {
+  let players = [];
+  if (localStorage.getItem("players")) {
+    // usiamo try per evitare che in caso ci sia qualcosa di non corretto in localstorage
+    // il gioco non crash
+    try {
+      const playersInLocalStorage = JSON.parse(localStorage.getItem("players"));
+      if (
+        // qui controlliamo che localstorage contiene un array
+        Array.isArray(playersInLocalStorage)
+      ) {
+        players = playersInLocalStorage;
+      }
+    } catch (err) {}
+  }
+  return players;
+}
+
+function savePlayerScore() {
+  playerInfo.score = points;
+  let players = getLeaderboard();
+
+  players.push(playerInfo);
+  localStorage.setItem("players", JSON.stringify(players));
+}
+
+function showLeaderBoard() {
+  // prendi i giocatori
+  let playersArray = getLeaderboard();
+
+  // ordinare per punti
+  playersArray.sort((a, b) => {
+    if (a.score < b.score) {
+      return 1;
+    } else if (a.score > b.score) {
+      return -1;
+    } else {
+      return 0;
+    }
+  });
+
+  // limitare 4 / 5
+  playersArray = playersArray.slice(0, 4);
+  console.log(playersArray);
+  leaderBoardEl.innerHTML = "";
+  // ciclo nell'oggetto
+  // mi prendo gli elementi
+  // per ogni elemento aggiungo un nodo al dom
+  for (let player of playersArray) {
+    // non fare cosi perchè https://owasp.org/www-community/attacks/xss/
+    // const li = `<li><span class="icon">${player.icons}</span><span class="name">${player.name}</span><span class="score">${player.score}</span></li>`;
+    // leaderBoardEl.innerHTML += li;
+    const li = document.createElement("li");
+    const spanIcon = document.createElement("span");
+    spanIcon.textContent = player.icons;
+    spanIcon.className = "leaderBoard-icon";
+    li.appendChild(spanIcon);
+    const spanName = document.createElement("span");
+    spanName.textContent = player.name;
+    spanName.className = "leaderBoard-name";
+    li.appendChild(spanName);
+    const spanScore = document.createElement("span");
+    spanScore.textContent = player.score;
+    spanScore.className = "leaderBoard-score";
+    li.appendChild(spanScore);
+
+    leaderBoardEl.appendChild(li);
+  }
+}
 
 //------------------------------------------------
-
 // Here we get the id from each card div and assign it to a
 // respective element.
 
@@ -59,7 +148,7 @@ setListners();
 
 // When we have set up the event listners for the cards, we
 // start the main game loop:
-
+showLeaderBoard();
 gameLoop();
 
 // Here is the main game loop. When the game loop runs,
@@ -78,7 +167,10 @@ function gameLoop() {
     roundsPlayed++;
   } else {
     console.log(`Game over. You scored ${points} out of 3!`);
+    savePlayerScore();
     removeButtons();
+    // show leaderBoard
+    showLeaderBoard();
   }
 }
 
