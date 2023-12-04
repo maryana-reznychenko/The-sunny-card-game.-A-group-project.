@@ -263,7 +263,7 @@ function drawCards() {
     let imageSrc = "";
 
     if (card.type.toUpperCase() === "SUN") {
-      imageSrc = "path/to/first/image.jpg";
+      imageSrc = "media/sun.jpg";
     } /*else if (card.type.toUpperCase() === "RAIN") {
       imageSrc = "path/to/second/image.jpg";
     } else if (card.type.toUpperCase() === "SNOW") {
