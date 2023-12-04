@@ -87,7 +87,7 @@ function showLeaderBoard() {
   });
 
   // Limit the displayed players to 4
-  playersArray = playersArray.slice(0, 4);
+  playersArray = playersArray.slice(0, 10);
   console.log("playersArray", playersArray);
 
   // Clear the existing leaderboard content
