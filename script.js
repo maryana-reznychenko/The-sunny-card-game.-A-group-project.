@@ -27,6 +27,7 @@ let leaderBoardEl = document.querySelector("#leaderBoard");
 function getPlayer() {
   // Extract player information from the form elements
   playerInfo = {
+    // Get the icon for the corresponding options in the HTML (sunglasses, ghost etc.)
     icons: playerIconsEl.querySelector(`option[value=${playerIconsEl.value}]`)
       .textContent,
     name: inputPlayerEl.value,
