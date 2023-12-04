@@ -1,6 +1,121 @@
+/* Reset */
 * {
   box-sizing: border-box;
   margin: 0;
+  font-family: monospace;
+  font-size: 20px;
+  color: white;
+  letter-spacing: 1px;
+}
+
+:root {
+  --color-primary: #ff3b30;
+  --color-secondary: #02763c;
+  --color-bg: #008844;
+}
+
+/* Global */
+body {
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3.5rem;
+  height: 100vh;
+}
+
+button {
+  width: 176px;
+  height: 56px;
+  border-radius: 76px;
+  border: 0;
+  background: var(--color-secondary);
+}
+
+button:hover {
+  box-shadow: 0px 7px 6px 0px rgba(0, 98, 40, 0.25) inset;
+}
+
+input {
+  background: none;
+  border: none;
+  height: 56px;
+  padding: 1rem;
+}
+input {
+  outline: none;
+}
+
+footer {
+  background: var(--color-secondary);
+  border-radius: 76px;
+  padding: 1rem;
+  width: 70%;
+  margin: 3rem auto 0 auto;
+  text-align: center;
+  font-weight: 100;
+  font-size: 16px;
+}
+
+/* Layout */
+
+.container-header {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  align-items: center;
+}
+
+.button-start {
+  background: var(--color-primary);
+  margin-right: 1rem;
+}
+.button-start:hover {
+  box-shadow: 0px 7px 6px 0px rgba(99, 29, 25, 0.25) inset;
+}
+
+.container__hearts {
+  max-height: 56px;
+}
+
+.container__main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.container__input {
+  background: var(--color-secondary);
+  position: absolute;
+  height: 40vh;
+  width: 80vw;
+  z-index: 1;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-player {
+  border-bottom: 3px solid white;
+  color: #0a4e14;
+  font-weight: 400;
+  font-size: 24px;
+  margin-right: 2rem;
+}
+
+.input-player::placeholder {
+  color: #0a4e14;
+  font-weight: 400;
+  font-size: 24px;
+}
+
+.container__input > button {
+  background-color: #006c32;
+  font-size: 20px;
+  width: 140px;
 }
 
 .card {
@@ -14,18 +129,15 @@
   background-color: #e34234;
 }
 
-.container_main {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-
-.container_cards {
+.container__cards {
   height: 300px;
   width: 650px;
   display: flex; /* Use flexbox for the container */
   justify-content: space-between;
+}
+
+.container__card-score {
+  background: var(--color-secondary);
+  width: 200px;
+  height: 300px;
 }

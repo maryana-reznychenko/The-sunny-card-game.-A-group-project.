@@ -16,6 +16,10 @@
 // if it is the right card is The Sun card --> 1 point
 
 //------------------------------------------------
+// Here we get the element input from html document
+let inputPlayerEl = document.querySelector(".input-player");
+
+//------------------------------------------------
 
 // Here we get the id from each card div and assign it to a
 // respective element.
