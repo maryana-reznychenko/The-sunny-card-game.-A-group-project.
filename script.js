@@ -1,7 +1,3 @@
-// 1. create the user (input name)
-// 2. Create a object of icons (max 10) (id 01: 😀, id 02: 😇 )
-// User = icons + name --> 😀 Carmela - 😇 Maryana - 🤪 Marcus
-
 //Show cards from existing divs (pictures)
 // create three cards (back and front)
 // three picture : sun - rain - snow
@@ -15,12 +11,118 @@
 
 // if it is the right card is The Sun card --> 1 point
 
-//------------------------------------------------
-// Here we get the element input from html document
+/*------------------------------------------------
+ CREATE PLAYER AND SAVE IN LEADERBOARD
+------------------------------------------------*/
+// Get HTML elements for player form, select, input, and leaderboard
+let playerFormEl = document.querySelector("#playerName");
+let playerIconsEl = document.querySelector("#playerIcons");
 let inputPlayerEl = document.querySelector(".input-player");
+let playerInfo = {};
+let leaderBoardEl = document.querySelector("#leaderBoard");
+
+// Function to retrieve player information from the form
+function getPlayer() {
+  // Extract player information from the form elements
+  playerInfo = {
+    icons: playerIconsEl.querySelector(`option[value=${playerIconsEl.value}]`)
+      .textContent,
+    name: inputPlayerEl.value,
+    score: 0,
+  };
+  return playerInfo;
+}
+
+// Event listener for player form submission
+playerFormEl.addEventListener("submit", function (e) {
+  e.preventDefault();
+  getPlayer(); // Get player info
+  playerFormEl.classList.add("hide-input"); // Hide the player input form
+});
+
+// Function to retrieve leaderboard data from local storage
+function getLeaderboard() {
+  let players = [];
+
+  if (localStorage.getItem("players")) {
+    // Use try-catch to prevent crashes if local storage data is not valid JSON
+    try {
+      const playersInLocalStorage = JSON.parse(localStorage.getItem("players"));
+
+      // Check if the data in local storage is an array
+      if (Array.isArray(playersInLocalStorage)) {
+        players = playersInLocalStorage;
+      }
+    } catch (err) {}
+  }
+  return players;
+}
+
+// Function to save player's score to the leaderboard in local storage
+function savePlayerScore() {
+  playerInfo.score = points; // Assuming 'points' is a global variable
+  let players = getLeaderboard();
+
+  // Add the current player's info to the leaderboard
+  players.push(playerInfo);
+  localStorage.setItem("players", JSON.stringify(players));
+}
+
+// Function to display the leaderboard on the webpage
+function showLeaderBoard() {
+  // Retrieve players from the leaderboard
+  let playersArray = getLeaderboard();
+
+  // Sort players by score in descending order
+  playersArray.sort((a, b) => {
+    if (a.score < b.score) {
+      return 1;
+    } else if (a.score > b.score) {
+      return -1;
+    } else {
+      return 0;
+    }
+  });
+
+  // Limit the displayed players to 4
+  playersArray = playersArray.slice(0, 4);
+  console.log("playersArray", playersArray);
+
+  // Clear the existing leaderboard content
+  leaderBoardEl.innerHTML = "";
+
+  // Iterate through the player data and create HTML elements to display on the leaderboard
+  for (let player of playersArray) {
+    /*  non fare cosi perchè https://owasp.org/www-community/attacks/xss/
+    const li = `<li><span class="icon">${player.icons}</span><span class="name">${player.name}</span><span class="score">${player.score}</span></li>`;
+    leaderBoardEl.innerHTML += li; */
+
+    // Create li element for each player
+    const li = document.createElement("li");
+    // Create span element for player icon
+    const spanIcon = document.createElement("span");
+    spanIcon.textContent = player.icons;
+    spanIcon.className = "leaderBoard-icon";
+    li.appendChild(spanIcon);
+
+    // Create span element for player name
+    const spanName = document.createElement("span");
+    spanName.textContent = player.name;
+    spanName.className = "leaderBoard-name";
+    li.appendChild(spanName);
+
+    // Create span element for player score
+    const spanScore = document.createElement("span");
+    spanScore.textContent = player.score;
+    spanScore.className = "leaderBoard-score";
+    li.appendChild(spanScore);
+
+    // Append the li element to the leaderboard
+    leaderBoardEl.appendChild(li);
+  }
+}
 
 //------------------------------------------------
-
 // Here we get the id from each card div and assign it to a
 // respective element.
 
@@ -57,9 +159,9 @@ let roundsPlayed = 0;
 
 setListners();
 
+showLeaderBoard(); // This line is added to display the leaderboard before the game starts
 // When we have set up the event listners for the cards, we
 // start the main game loop:
-
 gameLoop();
 
 // Here is the main game loop. When the game loop runs,
@@ -78,7 +180,10 @@ function gameLoop() {
     roundsPlayed++;
   } else {
     console.log(`Game over. You scored ${points} out of 3!`);
+    savePlayerScore();
     removeButtons();
+
+    showLeaderBoard(); // // This line is added to display the leaderboard with the new player
   }
 }
 
