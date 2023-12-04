@@ -1,7 +1,3 @@
-// 1. create the user (input name)
-// 2. Create a object of icons (max 10) (id 01: 😀, id 02: 😇 )
-// User = icons + name --> 😀 Carmela - 😇 Maryana - 🤪 Marcus
-
 //Show cards from existing divs (pictures)
 // create three cards (back and front)
 // three picture : sun - rain - snow
@@ -15,7 +11,9 @@
 
 // if it is the right card is The Sun card --> 1 point
 
-//------------------------------------------------
+/*------------------------------------------------
+ CREATE PLAYER AND SAVE IN LEADERBOARD
+------------------------------------------------*/
 // Get HTML elements for player form, select, input, and leaderboard
 let playerFormEl = document.querySelector("#playerName");
 let playerIconsEl = document.querySelector("#playerIcons");
