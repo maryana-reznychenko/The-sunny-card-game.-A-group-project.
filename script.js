@@ -36,6 +36,11 @@ function getPlayer() {
   return playerInfo;
 }
 
+let resetEl = document.querySelector(".button-start");
+resetEl.addEventListener("click", function () {
+  location.reload();
+});
+
 // Event listener for player form submission
 playerFormEl.addEventListener("submit", function (e) {
   e.preventDefault();
