@@ -52,9 +52,16 @@
       </div>
     </div>
     <div class="container__main">
-      <form class="container__input">
+      <form class="container__input" id="playerName">
+        <select name="icons" id="playerIcons">
+          <option value="sunglasses">😎</option>
+          <option value="disguised">🥸</option>
+          <option value="ghost">👻</option>
+          <option value="poop">💩</option>
+          <option value="monster">👾</option>
+        </select>
         <input type="text" class="input-player" placeholder="Your Name" />
-        <button>Submit</button>
+        <button type="submit">Submit</button>
       </form>
       <div class="gameText"></div>
       <div class="container__cards">
@@ -64,7 +71,7 @@
       </div>
       <div class="container__card-score">
         <div>Score:</div>
-        <div></div>
+        <ul id="leaderBoard"></ul>
       </div>
     </div>
     <footer>This game is made by Maryana, Marcus and Carmela</footer>
