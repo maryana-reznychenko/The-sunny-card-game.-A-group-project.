@@ -264,11 +264,11 @@ function drawCards() {
 
     if (card.type.toUpperCase() === "SUN") {
       imageSrc = "path/to/first/image.jpg";
-    } else if (card.type.toUpperCase() === "RAIN") {
+    } /*else if (card.type.toUpperCase() === "RAIN") {
       imageSrc = "path/to/second/image.jpg";
     } else if (card.type.toUpperCase() === "SNOW") {
       imageSrc = "path/to/third/image.jpg";
-    }
+    }*/
 
     card.element.src = imageSrc;
   });
