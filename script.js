@@ -132,10 +132,10 @@ let cardEl0 = document.querySelector("#cardDiv0");
 let cardEl1 = document.querySelector("#cardDiv1");
 let cardEl2 = document.querySelector("#cardDiv2");
 
-// To make it a bit easier to handle these elements, we assign
-// each element to a slot in an array, so that we can write
-// cardIndex[0] instead of the name of the element, and so
-// that we can use the elements in for-loops.
+/* To make it a bit easier to handle these elements, we assign
+each element to a slot in an array, so that we can write
+cardIndex[0] instead of the name of the element, and so
+that we can use the elements in for-loops.*/
 
 const cardIndexes = [cardEl0, cardEl1, cardEl2];
 
@@ -166,14 +166,14 @@ showLeaderBoard(); // This line is added to display the leaderboard before the g
 // start the main game loop:
 gameLoop();
 
-// Here is the main game loop. When the game loop runs,
-// it first checks to see if the player has already played
-// 3 rounds. If this is the case, it will post game over and the score.
-// Then it hides the divs so the player can't click them.
-// If the player still as rounds to play, the game loop begins
-// by scrambling the cards. It then assigns a card type to each
-// of the card elements (cardDiv0 etc.)
-// After this is done, it adds one to the rounds played tracker.
+/* Here is the main game loop. When the game loop runs,
+it first checks to see if the player has already played
+3 rounds. If this is the case, it will post game over and the score.
+Then it hides the divs so the player can't click them.
+If the player still as rounds to play, the game loop begins
+by scrambling the cards. It then assigns a card type to each
+of the card elements (cardDiv0 etc.)
+After this is done, it adds one to the rounds played tracker.*/
 
 function gameLoop() {
   if (roundsPlayed < 3) {
@@ -193,14 +193,14 @@ function gameLoop() {
 // card divs:
 
 function setListners() {
-  // Remember that cardIndexes holds the elements that we have assigned
-  // to point to the different divs, for example cardDiv0. So here,
-  // we go through each of these divs and assign an event listener to them,
-  // which calls the function handleClick().
-  //    In the anonymous function, "card" represents whatever div (cardDiv0 etc.)
-  // that the loop is handling in that instance. So if we are on the second
-  // iteration of the loop, for example, "card" will equal "cardDiv1",
-  // and the "i" will be the number of that index, so in this case 1 [because 0, 1, 2].
+  /* Remember that cardIndexes holds the elements that we have assigned
+  to point to the different divs, for example cardDiv0. So here,
+  we go through each of these divs and assign an event listener to them,
+  which calls the function handleClick().
+     In the anonymous function, "card" represents whatever div (cardDiv0 etc.)
+  that the loop is handling in that instance. So if we are on the second
+  iteration of the loop, for example, "card" will equal "cardDiv1",
+  and the "i" will be the number of that index, so in this case 1 [because 0, 1, 2].*/
 
   cardIndexes.forEach(function (card, i) {
     card.addEventListener("click", function () {
@@ -213,26 +213,26 @@ function setListners() {
   });
 }
 
-// Here is the handleClick function. This function takes whatever text has been
-// randomly assigned to a div, and compares it to the string "SUN" when the
-// div is clicked. .
+/* Here is the handleClick function. This function takes whatever text has been
+randomly assigned to a div, and compares it to the string "SUN" when the
+div is clicked.*/
 
 function handleClick(checkedCard) {
-  // If it is "SUN", then we add one point to the points variable.
-  // After either of these is done, we execute gameLoop(); again. This is what
-  // creates the function inside a function (because right now, the previous gameLoop is
-  // still running.) The reason for this is that if we had put everything in a for-loop,
-  // the for-loop wouldn't stop to wait and see if the event listeners had been clicked. It
-  // would just finish running until the game is over, before the player even has a chance to
-  // do anything.
+  /* If it is "SUN", then we add one point to the points variable.
+  After either of these is done, we execute gameLoop(); again. This is what 
+  creates the function inside a function (because right now, the previous gameLoop is
+  still running.) The reason for this is that if we had put everything in a for-loop,
+  the for-loop wouldn't stop to wait and see if the event listeners had been clicked. It
+  would just finish running until the game is over, before the player even has a chance to
+  do anything.*/
 
   if (checkedCard.textContent.toUpperCase() === "SUN") {
     points++;
     console.log("Correct guess!");
 
-    // If cardDiv0, for example, has been assigned the string
-    // "Rain", handleClick will receive "cardDiv0", and see if cardDiv0.textContent === "SUN".
-    // Because this returns false, it will console.log "Wrong!"
+    /* If cardDiv0, for example, has been assigned the string
+    "Rain", handleClick will receive "cardDiv0", and see if cardDiv0.textContent === "SUN".
+    Because this returns false, it will console.log "Wrong!"*/
   } else {
     console.log("Wrong!");
   }
@@ -246,12 +246,12 @@ function drawCards() {
   });
 }
 
-// When we have completed the game, we want to make sure the player
-// cannot click the buttons anymore. But because the gameLoop() function
-// ends up being a function inside a function inside a function, we can't
-// use removeEventListner (because if we do this in the last function, the
-// event listners of the previous function will still be active.)
-// So instead we just hide the div elements when the game is done.
+/* When we have completed the game, we want to make sure the player
+cannot click the buttons anymore. But because the gameLoop() function
+ends up being a function inside a function inside a function, we can't
+use removeEventListner (because if we do this in the last function, the
+event listners of the previous function will still be active.)
+So instead we just hide the div elements when the game is done.*/
 
 function removeButtons() {
   cardEl0.style.display = "none";
