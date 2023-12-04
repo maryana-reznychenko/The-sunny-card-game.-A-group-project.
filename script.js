@@ -143,7 +143,11 @@ each element to a slot in an array, so that we can write
 cardIndex[0] instead of the name of the element, and so
 that we can use the elements in for-loops.*/
 
-const cardIndexes = [cardEl0, cardEl1, cardEl2];
+const cardIndexes = [
+  { element: cardEl0, type: "" },
+  { element: cardEl1, type: "" },
+  { element: cardEl2, type: "" },
+];
 
 // We create an array with the different types that a card can have:
 
@@ -167,6 +171,8 @@ let roundsPlayed = 0;
 
 setListners();
 
+refreshCards();
+
 showLeaderBoard(); // This line is added to display the leaderboard before the game starts
 // When we have set up the event listners for the cards, we
 // start the main game loop:
@@ -183,8 +189,6 @@ After this is done, it adds one to the rounds played tracker.*/
 
 function gameLoop() {
   if (roundsPlayed < 3) {
-    scrambleCards();
-    drawCards();
     roundsPlayed++;
   } else {
     console.log(`Game over. You scored ${points} out of 3!`);
@@ -193,6 +197,11 @@ function gameLoop() {
 
     showLeaderBoard(); // // This line is added to display the leaderboard with the new player
   }
+}
+
+function refreshCards() {
+  scrambleCards();
+  drawCards();
 }
 
 // Here is the function to set up the event listeners for the
@@ -209,12 +218,12 @@ function setListners() {
   and the "i" will be the number of that index, so in this case 1 [because 0, 1, 2].*/
 
   cardIndexes.forEach(function (card, i) {
-    card.addEventListener("click", function () {
+    card.element.addEventListener("click", function () {
       // When the button/card is clicked, the handleClick function is called,
       // and we send it whichever div happens to be assigned to that respective card.
       // So if we click for example cardDiv0, we run handleClick(cardDiv0);
 
-      handleClick(card);
+      handleClick(card.type);
     });
   });
 }
@@ -223,7 +232,7 @@ function setListners() {
 randomly assigned to a div, and compares it to the string "SUN" when the
 div is clicked.*/
 
-function handleClick(checkedCard) {
+function handleClick(checkedCardType) {
   /* If it is "SUN", then we add one point to the points variable.
   After either of these is done, we execute gameLoop(); again. This is what 
   creates the function inside a function (because right now, the previous gameLoop is
@@ -232,7 +241,7 @@ function handleClick(checkedCard) {
   would just finish running until the game is over, before the player even has a chance to
   do anything.*/
 
-  if (checkedCard.textContent.toUpperCase() === "SUN") {
+  if (checkedCardType.toUpperCase() === "SUN") {
     points++;
     console.log("Correct guess!");
 
@@ -243,12 +252,21 @@ function handleClick(checkedCard) {
     console.log("Wrong!");
   }
 
-  gameLoop();
+  roundsPlayed++;
+  refreshCards();
 }
 
 function drawCards() {
   cardIndexes.forEach(function (card, i) {
-    card.textContent = scrambledCardArray[i];
+    card.type = scrambledCardArray[i];
+
+    if (card.type.toUpperCase === "SUN") {
+      imageSrc = "path/to/first/image.jpg";
+    } else if (card.type.toUpperCase === "RAIN") {
+      imageSrc = "path/to/second/image.jpg";
+    } else if (card.type.toUpperCase === "SNOW") {
+      imageSrc = "path/to/third/image.jpg";
+    }
   });
 }
 
