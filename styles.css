@@ -12,6 +12,8 @@
   --color-primary: #ff3b30;
   --color-secondary: #02763c;
   --color-bg: #008844;
+  --color-primary-card-front: rgb(60, 36, 178);
+  --color-primary-card-back: rgb(250, 224, 29);
 }
 
 /* Global */
@@ -127,27 +129,39 @@ footer {
   width: 140px;
 }
 
+.container__cards {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .card {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 2rem;
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+}
+
+.card-front {
+  width: 8em;
+  height: 12em;
+  background-color: var(--color-primary-card-front);
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 200px;
-  height: 300px;
-  border-radius: 1.5rem;
-  background-color: #e34234;
+  backface-visibility: hidden;
 }
 
-.container__cards {
-  height: 300px;
-  width: 650px;
-  display: flex; /* Use flexbox for the container */
-  justify-content: space-between;
+.card-back {
+  width: 8em;
+  height: 12em;
+  background-color: var(--color-primary-card-back);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
 }
 
-.container__card-score {
-  background: var(--color-secondary);
-  width: 200px;
-  height: 300px;
+/* this class from JS to rotate the card  */
+.flipCard {
+  transform: rotateY(180deg);
 }
