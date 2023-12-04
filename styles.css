@@ -41,8 +41,13 @@ input {
   border: none;
   height: 56px;
   padding: 1rem;
+  outline: none;
 }
-input {
+select {
+  background: none;
+  border: none;
+  margin-right: 1rem;
+  font-size: 24px;
   outline: none;
 }
 
@@ -96,6 +101,10 @@ footer {
   text-align: center;
   justify-content: center;
   align-items: center;
+}
+
+.hide-input {
+  display: none;
 }
 
 .input-player {
