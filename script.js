@@ -61,7 +61,7 @@ function getLeaderboard() {
       if (Array.isArray(playersInLocalStorage)) {
         players = playersInLocalStorage;
       }
-    } catch (err) {}
+    } catch (err) { }
   }
   return players;
 }
@@ -281,4 +281,21 @@ function scramble(array) {
 
 function scrambleCards() {
   scrambledCardArray = scramble(cardTypes);
+}
+
+
+
+
+/* - - - - - - - - - - - - - - - - -
+  "Flip the card" functionality:
+ - - - - - - - - - - - - - - - - - - */
+const cardsEl = document.querySelectorAll(".card");
+
+cardsEl.forEach(function (card) {
+  card.addEventListener('click', flipCard)
+});
+
+function flipCard(e) {
+  const clickedCard = e.currentTarget;
+  clickedCard.classList.toggle("flipCard");
 }
