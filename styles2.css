@@ -1,11 +1,11 @@
 * {
   box-sizing: border-box;
 }
-.cards {
+/* .cards {
   position: relative;
-}
+} */
 
-.card {
+/* .card {
   width: 200px;
   height: 300px;
   position: absolute;
@@ -13,7 +13,7 @@
   left: 0;
   transition: translate 400ms linear;
   border-radius: 1.5rem;
-}
+} */
 
 .card__front,
 .card__back {

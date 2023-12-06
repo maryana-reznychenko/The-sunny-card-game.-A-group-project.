@@ -136,10 +136,17 @@ footer {
 
 .card {
   transform-style: preserve-3d;
-  transition: transform 0.5s;
+  /* transition: transform 0.5s; */
+  width: 200px;
+  height: 300px;
+  position: relative;
+  top: 0;
+  left: 0;
+  transition: translate 400ms linear;
+  border-radius: 1.5rem;
 }
 
-.card-front {
+.card__front {
   width: 8em;
   height: 12em;
   background-color: var(--color-primary-card-front);
@@ -150,7 +157,7 @@ footer {
   backface-visibility: hidden;
 }
 
-.card-back {
+.card__back {
   width: 8em;
   height: 12em;
   background-color: var(--color-primary-card-back);
@@ -159,9 +166,33 @@ footer {
   justify-content: center;
   backface-visibility: hidden;
   transform: rotateY(180deg);
+
+  background-color: salmon;
+  border: 5px solid red;
+  visibility: hidden;
+}
+
+.card--red .card__front {
+  background-color: red;
+}
+
+.card--green .card__front {
+  background-color: green;
+}
+
+.card--blue .card__front {
+  background-color: blue;
+}
+
+.card--flipped .card__front {
+  visibility: hidden;
+}
+
+.card--flipped .card__back {
+  visibility: visible;
 }
 
 /* this class from JS to rotate the card  */
-.flipCard {
+/* .flipCard {
   transform: rotateY(180deg);
-}
+} */
