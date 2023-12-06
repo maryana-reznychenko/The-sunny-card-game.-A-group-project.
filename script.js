@@ -1,18 +1,3 @@
-// branch in main
-
-//Show cards from existing divs (pictures)
-// create three cards (back and front)
-// three picture : sun - rain - snow
-
-// Show the cards in front
-// flip cards in back
-// mix thouse cards
-
-// add click to the each card
-// turn (flip) the card
-
-// if it is the right card is The Sun card --> 1 point
-
 /*------------------------------------------------
  CREATE PLAYER AND SAVE IN LEADERBOARD
 ------------------------------------------------*/
@@ -27,7 +12,6 @@ let leaderBoardEl = document.querySelector("#leaderBoard");
 function getPlayer() {
   // Extract player information from the form elements
   playerInfo = {
-    // Get the icon for the corresponding options in the HTML (sunglasses, ghost etc.)
     icons: playerIconsEl.querySelector(`option[value=${playerIconsEl.value}]`)
       .textContent,
     name: inputPlayerEl.value,
@@ -36,16 +20,13 @@ function getPlayer() {
   return playerInfo;
 }
 
-let resetEl = document.querySelector(".button-start");
-resetEl.addEventListener("click", function () {
-  location.reload();
-});
-
 // Event listener for player form submission
 playerFormEl.addEventListener("submit", function (e) {
   e.preventDefault();
   getPlayer(); // Get player info
-  playerFormEl.classList.add("hide-input"); // Hide the player input form
+  playerFormEl.classList.add("hide-input");
+  showLeaderBoard(); // This line is added to display the leaderboard before the game starts
+  // Hide the player input form
 });
 
 // Function to retrieve leaderboard data from local storage
@@ -92,8 +73,8 @@ function showLeaderBoard() {
     }
   });
 
-  // Limit the displayed players to 4
-  playersArray = playersArray.slice(0, 10);
+  // Limit the displayed players to 5
+  playersArray = playersArray.slice(0, 6);
   console.log("playersArray", playersArray);
 
   // Clear the existing leaderboard content
@@ -130,118 +111,121 @@ function showLeaderBoard() {
   }
 }
 
-//------------------------------------------------
-// Here we get the id from each card div and assign it to a
-// respective element.
-
-showLeaderBoard(); // This line is added to display the leaderboard before the game starts
-// When we have set up the event listners for the cards, we
-// start the main game loop:
-
-showLeaderBoard(); // // This line is added to display the leaderboard with the new player
+/*------------------------------------------------
+ Cards - shuffle 
+------------------------------------------------*/
+let cardEls = document.querySelectorAll(".card");
+let buttonStart = document.querySelector(".button-start");
 
 let points = 0;
 let roundsPlayed = 0;
-let maxRounds = 5;
-
 let cards = [0, 1, 2];
 
-let cardEls = document.querySelectorAll(".card");
-
-let correctEl = document.querySelector(".card--red");
-correctEl.addEventListener("click", function () {
-  if (roundsPlayed === maxRounds) {
-    location.reload();
-  } else {
-    roundsPlayed += 1;
-    points += 1;
-    console.log("Correct");
-    console.log(`Rounds played: ${roundsPlayed}`);
-    console.log(`Points: ${points}`);
-    playRound();
-  }
+buttonStart.addEventListener("click", function () {
+  startGame();
 });
 
-let falseElBlue = document.querySelector(".card--blue");
-falseElBlue.addEventListener("click", function () {
-  falseCard();
-});
+function startGame() {
+  // ----- When you click on single card ----------------
+  showLeaderBoard(); // This line is added to display the leaderboard before the game starts
 
-let falseElGreen = document.querySelector(".card--green");
-falseElGreen.addEventListener("click", function () {
-  falseCard();
-});
-
-function falseCard() {
-  if (roundsPlayed === maxRounds) {
-    location.reload();
-  } else {
-    console.log("Wrong");
-    roundsPlayed += 1;
-    console.log(`Rounds played: ${roundsPlayed} of ${maxRounds}`);
-    console.log(`Points: ${points}`);
-    playRound();
-  }
-}
-
-function shuffleCards() {
-  let cardShuffle;
-  do {
-    cardShuffle = cards.slice().sort(() => Math.random() - 0.5);
-  } while (arraysEqual(cards, cardShuffle));
-
-  cards = cardShuffle;
-
-  for (let i = 0; i < cards.length; i++) {
-    const card = cards[i];
-    const cardEl = cardEls[card];
-
-    cardEl.style.zIndex = Math.ceil(Math.random() * 5) + 1;
-    cardEl.style.translate = `${200 * i}px`;
-  }
-}
-
-shuffleCards();
-
-function playRound() {
-  for (let cardEl of cardEls) {
-    //cardEl.classList.add("card--flipped");
-  }
-
-  let count = 0;
-  let interval = setInterval(function () {
-    shuffleCards();
-    count += 1;
-
-    // Exit interval
-    if (count === 10) {
-      clearInterval(interval);
+  let correctEl = document.querySelector(".card--red");
+  correctEl.addEventListener("click", function () {
+    if (roundsPlayed === 5) {
+      location.reload();
+    } else {
+      roundsPlayed += 1;
+      points += 1;
+      console.log("Correct");
+      console.log(`Rounds played: ${roundsPlayed}`);
+      console.log(`Points: ${points}`);
+      playRound();
+      showLeaderBoard();
     }
-  }, 400);
-}
+  });
 
-setTimeout(function () {
-  playRound();
-}, 1500);
+  let falseElBlue = document.querySelector(".card--blue");
+  falseElBlue.addEventListener("click", function () {
+    falseCard();
+  });
 
-function arraysEqual(arr1, arr2) {
-  if (arr1.length !== arr2.length) {
-    return false;
+  let falseElGreen = document.querySelector(".card--green");
+  falseElGreen.addEventListener("click", function () {
+    falseCard();
+  });
+
+  function falseCard() {
+    if (roundsPlayed === 5) {
+      location.reload();
+    } else {
+      console.log("Wrong");
+      roundsPlayed += 1;
+      console.log(`Rounds played: ${roundsPlayed}`);
+      console.log(`Points: ${points}`);
+      savePlayerScore();
+      playRound();
+      showLeaderBoard();
+    }
   }
-  for (let i = 0; i < arr1.length; i++) {
-    if (arr1[i] !== arr2[i]) {
+
+  // ----- Shuffle cards ----------------
+
+  function shuffleCards() {
+    let cardShuffle;
+    do {
+      cardShuffle = cards.slice().sort(() => Math.random() - 0.5);
+    } while (arraysEqual(cards, cardShuffle));
+
+    cards = cardShuffle;
+
+    for (let i = 0; i < cards.length; i++) {
+      const card = cards[i];
+      const cardEl = cardEls[card];
+
+      cardEl.style.zIndex = Math.ceil(Math.random() * 5) + 1;
+      cardEl.style.translate = `${200 * i}px`;
+    }
+  }
+
+  function playRound() {
+    // for (let cardEl of cardEls) {
+    //   cardEl.classList.add("card--flipped");
+    // }
+
+    let count = 0;
+    let interval = setInterval(function () {
+      shuffleCards();
+      count += 1;
+
+      // Exit interval
+      if (count === 10) {
+        clearInterval(interval);
+      }
+    }, 400);
+  }
+
+  setTimeout(function () {
+    playRound();
+  }, 1500);
+
+  function arraysEqual(arr1, arr2) {
+    if (arr1.length !== arr2.length) {
       return false;
     }
+    for (let i = 0; i < arr1.length; i++) {
+      if (arr1[i] !== arr2[i]) {
+        return false;
+      }
+    }
+    return true;
   }
-  return true;
 }
 
 /* - - - - - - - - - - - - - - - - -
   "Flip the card" functionality:
  - - - - - - - - - - - - - - - - - - */
-const cardsEl = document.querySelectorAll(".card");
 
-cardsEl.forEach(function (card) {
+cardEls.forEach(function (card) {
   card.addEventListener("click", flipCard);
 });
 
