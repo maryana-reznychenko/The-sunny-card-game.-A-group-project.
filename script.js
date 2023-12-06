@@ -61,7 +61,7 @@ function getLeaderboard() {
       if (Array.isArray(playersInLocalStorage)) {
         players = playersInLocalStorage;
       }
-    } catch (err) { }
+    } catch (err) {}
   }
   return players;
 }
@@ -134,179 +134,107 @@ function showLeaderBoard() {
 // Here we get the id from each card div and assign it to a
 // respective element.
 
-let cardEl0 = document.querySelector("#cardDiv0");
-let cardEl1 = document.querySelector("#cardDiv1");
-let cardEl2 = document.querySelector("#cardDiv2");
-
-/* To make it a bit easier to handle these elements, we assign
-each element to a slot in an array, so that we can write
-cardIndex[0] instead of the name of the element, and so
-that we can use the elements in for-loops.*/
-
-const cardIndexes = [
-  { element: cardEl0, type: "" },
-  { element: cardEl1, type: "" },
-  { element: cardEl2, type: "" },
-];
-
-// We create an array with the different types that a card can have:
-
-let cardTypes = ["Sun", "Rain", "Snow"];
-
-// Because we want to be able to re-use the array above,
-// we create an entirely new array that we can scramble
-// as we like:
-
-let scrambledCardArray = [];
-
-// Here we define the variables that count points and the number of rounds
-// played:
-
-let points = 0;
-let roundsPlayed = 0;
-
-// We want the divs in our HTML to be clickable, so we set up
-// event listners for each of the divs by calling the
-// setListners() function.
-
-setListners();
-
-refreshCards();
-
 showLeaderBoard(); // This line is added to display the leaderboard before the game starts
 // When we have set up the event listners for the cards, we
 // start the main game loop:
-gameLoop();
 
-/* Here is the main game loop. When the game loop runs,
-it first checks to see if the player has already played
-3 rounds. If this is the case, it will post game over and the score.
-Then it hides the divs so the player can't click them.
-If the player still as rounds to play, the game loop begins
-by scrambling the cards. It then assigns a card type to each
-of the card elements (cardDiv0 etc.)
-After this is done, it adds one to the rounds played tracker.*/
+showLeaderBoard(); // // This line is added to display the leaderboard with the new player
 
-function gameLoop() {
-  if (roundsPlayed < 3) {
-    roundsPlayed++;
+let points = 0;
+let roundsPlayed = 0;
+let maxRounds = 5;
+
+let cards = [0, 1, 2];
+
+let cardEls = document.querySelectorAll(".card");
+
+let correctEl = document.querySelector(".card--red");
+correctEl.addEventListener("click", function () {
+  if (roundsPlayed === maxRounds) {
+    location.reload();
   } else {
-    console.log(`Game over. You scored ${points} out of 3!`);
-    savePlayerScore();
-    removeButtons();
-
-    showLeaderBoard(); // // This line is added to display the leaderboard with the new player
+    roundsPlayed += 1;
+    points += 1;
+    console.log("Correct");
+    console.log(`Rounds played: ${roundsPlayed}`);
+    console.log(`Points: ${points}`);
+    playRound();
   }
-}
+});
 
-function refreshCards() {
-  scrambleCards();
-  drawCards();
-}
+let falseElBlue = document.querySelector(".card--blue");
+falseElBlue.addEventListener("click", function () {
+  falseCard();
+});
 
-// Here is the function to set up the event listeners for the
-// card divs:
+let falseElGreen = document.querySelector(".card--green");
+falseElGreen.addEventListener("click", function () {
+  falseCard();
+});
 
-function setListners() {
-  /* Remember that cardIndexes holds the elements that we have assigned
-  to point to the different divs, for example cardDiv0. So here,
-  we go through each of these divs and assign an event listener to them,
-  which calls the function handleClick().
-     In the anonymous function, "card" represents whatever div (cardDiv0 etc.)
-  that the loop is handling in that instance. So if we are on the second
-  iteration of the loop, for example, "card" will equal "cardDiv1",
-  and the "i" will be the number of that index, so in this case 1 [because 0, 1, 2].*/
-
-  cardIndexes.forEach(function (card, i) {
-    card.element.addEventListener("click", function () {
-      // When the button/card is clicked, the handleClick function is called,
-      // and we send it whichever div happens to be assigned to that respective card.
-      // So if we click for example cardDiv0, we run handleClick(cardDiv0);
-
-      handleClick(card.type);
-    });
-  });
-}
-
-/* Here is the handleClick function. This function takes whatever text has been
-randomly assigned to a div, and compares it to the string "SUN" when the
-div is clicked.*/
-
-function handleClick(checkedCardType) {
-  /* If it is "SUN", then we add one point to the points variable.
-  After either of these is done, we execute gameLoop(); again. This is what 
-  creates the function inside a function (because right now, the previous gameLoop is
-  still running.) The reason for this is that if we had put everything in a for-loop,
-  the for-loop wouldn't stop to wait and see if the event listeners had been clicked. It
-  would just finish running until the game is over, before the player even has a chance to
-  do anything.*/
-
-  if (checkedCardType.toUpperCase() === "SUN") {
-    points++;
-    console.log("Correct guess!");
-
-    /* If cardDiv0, for example, has been assigned the string
-    "Rain", handleClick will receive "cardDiv0", and see if cardDiv0.textContent === "SUN".
-    Because this returns false, it will console.log "Wrong!"*/
+function falseCard() {
+  if (roundsPlayed === maxRounds) {
+    location.reload();
   } else {
-    console.log("Wrong!");
+    console.log("Wrong");
+    roundsPlayed += 1;
+    console.log(`Rounds played: ${roundsPlayed} of ${maxRounds}`);
+    console.log(`Points: ${points}`);
+    playRound();
+  }
+}
+
+function shuffleCards() {
+  let cardShuffle;
+  do {
+    cardShuffle = cards.slice().sort(() => Math.random() - 0.5);
+  } while (arraysEqual(cards, cardShuffle));
+
+  cards = cardShuffle;
+
+  for (let i = 0; i < cards.length; i++) {
+    const card = cards[i];
+    const cardEl = cardEls[card];
+
+    cardEl.style.zIndex = Math.ceil(Math.random() * 5) + 1;
+    cardEl.style.translate = `${200 * i}px`;
+  }
+}
+
+shuffleCards();
+
+function playRound() {
+  for (let cardEl of cardEls) {
+    //cardEl.classList.add("card--flipped");
   }
 
-  roundsPlayed++;
-  refreshCards();
+  let count = 0;
+  let interval = setInterval(function () {
+    shuffleCards();
+    count += 1;
+
+    // Exit interval
+    if (count === 10) {
+      clearInterval(interval);
+    }
+  }, 400);
 }
 
-function drawCards() {
-  cardIndexes.forEach(function (card, i) {
-    card.type = scrambledCardArray[i];
+setTimeout(function () {
+  playRound();
+}, 1500);
 
-    let imageSrc = "";
-
-    if (card.type.toUpperCase() === "SUN") {
-      imageSrc = "media/sun.jpg";
-    } /*else if (card.type.toUpperCase() === "RAIN") {
-      imageSrc = "path/to/second/image.jpg";
-    } else if (card.type.toUpperCase() === "SNOW") {
-      imageSrc = "path/to/third/image.jpg";
-    }*/
-
-    card.element.src = imageSrc;
-  });
-}
-
-/* When we have completed the game, we want to make sure the player
-cannot click the buttons anymore. But because the gameLoop() function
-ends up being a function inside a function inside a function, we can't
-use removeEventListner (because if we do this in the last function, the
-event listners of the previous function will still be active.)
-So instead we just hide the div elements when the game is done.*/
-
-function removeButtons() {
-  cardEl0.style.display = "none";
-  cardEl1.style.display = "none";
-  cardEl2.style.display = "none";
-}
-
-// This is the function for scrambling an array:
-
-function scramble(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
+function arraysEqual(arr1, arr2) {
+  if (arr1.length !== arr2.length) {
+    return false;
   }
-
-  return array;
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) {
+      return false;
+    }
+  }
+  return true;
 }
-
-// This function gets the cardTypes array, scrambles it, and
-// assigns it to the scrambledCardsArray.
-
-function scrambleCards() {
-  scrambledCardArray = scramble(cardTypes);
-}
-
-
-
 
 /* - - - - - - - - - - - - - - - - -
   "Flip the card" functionality:
@@ -314,7 +242,7 @@ function scrambleCards() {
 const cardsEl = document.querySelectorAll(".card");
 
 cardsEl.forEach(function (card) {
-  card.addEventListener('click', flipCard)
+  card.addEventListener("click", flipCard);
 });
 
 function flipCard(e) {
