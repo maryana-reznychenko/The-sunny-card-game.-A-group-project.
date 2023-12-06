@@ -1,0 +1,52 @@
+* {
+  box-sizing: border-box;
+}
+.cards {
+  position: relative;
+}
+
+.card {
+  width: 200px;
+  height: 300px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: translate 400ms linear;
+  border-radius: 1.5rem;
+}
+
+.card__front,
+.card__back {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: 1.5rem;
+}
+
+.card__back {
+  background-color: salmon;
+  border: 5px solid red;
+  visibility: hidden;
+}
+
+.card--red .card__front {
+  background-color: red;
+}
+
+.card--green .card__front {
+  background-color: green;
+}
+
+.card--blue .card__front {
+  background-color: blue;
+}
+
+.card--flipped .card__front {
+  visibility: hidden;
+}
+
+.card--flipped .card__back {
+  visibility: visible;
+}
