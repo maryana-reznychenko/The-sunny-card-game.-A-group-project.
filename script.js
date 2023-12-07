@@ -1,3 +1,6 @@
+const CARD_WIDTH = 200;
+const AMOUNT_OF_SHUFFLES = 3;
+
 /*------------------------------------------------
  CREATE PLAYER AND SAVE IN LEADERBOARD
 ------------------------------------------------*/
@@ -125,6 +128,8 @@ buttonStart.addEventListener("click", function () {
   startGame();
 });
 
+shuffleCards();
+
 function startGame() {
   // ----- When you click on single card ----------------
   showLeaderBoard(); // This line is added to display the leaderboard before the game starts
@@ -146,79 +151,85 @@ function startGame() {
 
   let falseElBlue = document.querySelector(".card--blue");
   falseElBlue.addEventListener("click", function () {
+    //falseElBlue.classList.remove("card--flipped");
     falseCard();
   });
 
   let falseElGreen = document.querySelector(".card--green");
   falseElGreen.addEventListener("click", function () {
+    //falseElBlue.classList.remove("card--flipped");
     falseCard();
   });
 
-  function falseCard() {
-    if (roundsPlayed === 5) {
-      location.reload();
-    } else {
-      console.log("Wrong");
-      roundsPlayed += 1;
-      console.log(`Rounds played: ${roundsPlayed}`);
-      console.log(`Points: ${points}`);
-      savePlayerScore();
-      playRound();
-      showLeaderBoard();
-    }
-  }
-
-  // ----- Shuffle cards ----------------
-
-  function shuffleCards() {
-    let cardShuffle;
-    do {
-      cardShuffle = cards.slice().sort(() => Math.random() - 0.5);
-    } while (arraysEqual(cards, cardShuffle));
-
-    cards = cardShuffle;
-
-    for (let i = 0; i < cards.length; i++) {
-      const card = cards[i];
-      const cardEl = cardEls[card];
-
-      cardEl.style.zIndex = Math.ceil(Math.random() * 5) + 1;
-      cardEl.style.translate = `${200 * i}px`;
-    }
-  }
-
-  function playRound() {
-    // for (let cardEl of cardEls) {
-    //   cardEl.classList.add("card--flipped");
-    // }
-
-    let count = 0;
-    let interval = setInterval(function () {
-      shuffleCards();
-      count += 1;
-
-      // Exit interval
-      if (count === 10) {
-        clearInterval(interval);
-      }
-    }, 400);
-  }
+  correctEl.classList.add("card--flipped");
+  falseElBlue.classList.add("card--flipped");
+  falseElGreen.classList.add("card--flipped");
 
   setTimeout(function () {
     playRound();
   }, 1500);
+}
 
-  function arraysEqual(arr1, arr2) {
-    if (arr1.length !== arr2.length) {
+function falseCard() {
+  if (roundsPlayed === 5) {
+    location.reload();
+  } else {
+    console.log("Wrong");
+    roundsPlayed += 1;
+    console.log(`Rounds played: ${roundsPlayed}`);
+    console.log(`Points: ${points}`);
+    savePlayerScore();
+    playRound();
+    showLeaderBoard();
+  }
+}
+
+// ----- Shuffle cards ----------------
+
+function shuffleCards() {
+  let cardShuffle;
+  do {
+    cardShuffle = cards.slice().sort(() => Math.random() - 0.5);
+  } while (arraysEqual(cards, cardShuffle));
+
+  cards = cardShuffle;
+
+  for (let i = 0; i < cards.length; i++) {
+    const card = cards[i];
+    const cardEl = cardEls[card];
+
+    cardEl.style.zIndex = Math.ceil(Math.random() * 5) + 1;
+    cardEl.style.translate = `${CARD_WIDTH * i}px`;
+  }
+}
+
+function playRound() {
+  // for (let cardEl of cardEls) {
+  //   cardEl.classList.add("card--flipped");
+  // }
+
+  let count = 0;
+  let interval = setInterval(function () {
+    shuffleCards();
+    count += 1;
+
+    // Exit interval
+    if (count === AMOUNT_OF_SHUFFLES) {
+      clearInterval(interval);
+    }
+  }, 400);
+}
+
+function arraysEqual(arr1, arr2) {
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) {
       return false;
     }
-    for (let i = 0; i < arr1.length; i++) {
-      if (arr1[i] !== arr2[i]) {
-        return false;
-      }
-    }
-    return true;
   }
+  return true;
 }
 
 /* - - - - - - - - - - - - - - - - -
