@@ -81,6 +81,10 @@ footer {
   box-shadow: 0px 7px 6px 0px rgba(99, 29, 25, 0.25) inset;
 }
 
+.button-off {
+  pointer-events: none;
+}
+
 .container__hearts {
   max-height: 56px;
 }
@@ -105,7 +109,50 @@ footer {
   align-items: center;
 }
 
+.small__container {
+  background-color: #02763c;
+  padding: 1rem;
+  margin: 0 2rem;
+  height: 300px;
+
+  border-radius: 1.5rem;
+}
+
+.container__gameinfo {
+  width: 200px;
+  overflow-y: hidden;
+}
+
+#game__info {
+  font-size: 0.8rem;
+}
+
+.container__card-score {
+  width: 250px;
+}
+
 .hide-input {
+  display: none;
+}
+
+.game__over {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  width: 80vw;
+  border-bottom: 3px solid white;
+  background-color: #0a4e14;
+  color: #0a4e14;
+  font-weight: 400;
+  font-size: 24px;
+  z-index: 100;
+
   display: none;
 }
 
@@ -132,7 +179,7 @@ footer {
 .container__cards {
   position: relative;
   height: 300px;
-  width: 600px;
+  width: 650px;
 }
 
 .card__overlay {
@@ -157,8 +204,14 @@ footer {
   border-radius: 1.5rem;
 }
 
-.card.shuffle-in-progress {
-  pointer-events: none; /* Disable pointer events during shuffle */
+.button-off {
+  pointer-events: none;
+  color: #d6514a;
+  background-color: #9c3832;
+}
+
+.shuffle-in-progress {
+  pointer-events: none;
 }
 
 .card__front {

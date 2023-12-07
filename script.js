@@ -1,8 +1,8 @@
 const CARD_WIDTH = 200;
-const CARD_SPACING = 50;
+const CARD_SPACING = 25;
 const AMOUNT_OF_SHUFFLES = 10;
-const MAX_ROUNDS = 5;
-const SHUFFLE_SPEED = 350;
+const MAX_ROUNDS = 3;
+const SHUFFLE_SPEED = 400;
 
 const FLIP_ANIMATION_TIME = 500;
 const FLIP_PAUSE = 500;
@@ -14,6 +14,8 @@ const CARD_FLIP_TIMEOUT = FLIP_ANIMATION_TIME * 2 + FLIP_PAUSE;
 const SHUFFLE_TIMEOUT = CARD_FLIP_TIMEOUT + FLIP_ANIMATION_TIME * 2;
 
 const TOTAL_SHUFFLE_TIME = SHUFFLE_TIMEOUT + SHUFFLE_SPEED * AMOUNT_OF_SHUFFLES;
+
+const GAME_OVER_PAUSE = 1500;
 
 let cardEls = document.querySelectorAll(".card");
 let buttonStart = document.querySelector(".button-start");
@@ -51,6 +53,9 @@ playerFormEl.addEventListener("submit", function (e) {
   playerFormEl.classList.add("hide-input");
   showLeaderBoard(); // This line is added to display the leaderboard before the game starts
   // Hide the player input form
+
+  buttonStart.classList.remove("button-off"); // Activate the START button.
+  setTimeout(shuffleCardsOnce, 500);
 });
 
 // Function to retrieve leaderboard data from local storage
@@ -146,11 +151,12 @@ function showLeaderBoard() {
 // Game Setup:
 
 buttonStart.addEventListener("click", function () {
+  buttonStart.classList.add("button-off"); // Button off after starting game.
   startGame();
 });
 
 cardsAddFlipped();
-shuffleCardsOnce();
+
 showLeaderBoard();
 
 // Starts the game when clicking the START button:
@@ -181,13 +187,14 @@ function startGame() {
 
   // Cards are flipped.
 
-  flipAllCards();
+  /*   flipAllCards();
 
   // Cards are shuffled.
 
   setTimeout(function () {
     roundOfShuffles();
-  }, SHUFFLE_TIMEOUT);
+  }, SHUFFLE_TIMEOUT); */
+  shuffleFunc();
 }
 
 // This function runs when the correct card is clicked:
@@ -196,16 +203,16 @@ function correctCard() {
   //
   // If rounds are maxed out, run end-game function:
 
-  if (roundsPlayed === MAX_ROUNDS) {
-    location.reload();
+  if (roundsPlayed === MAX_ROUNDS - 1) {
+    points += 1;
+    roundsPlayed++;
+    updateInfoCorrect();
+    endGame();
     // Otherwise add one point and a round, and run the shuffle function:
   } else {
     roundsPlayed += 1;
     points += 1;
-    console.log("Correct");
-    console.log(`Rounds played: ${roundsPlayed}`);
-    console.log(`Points: ${points}`);
-
+    updateInfoCorrect();
     showLeaderBoard();
     shuffleFunc();
   }
@@ -215,20 +222,30 @@ function correctCard() {
 
 function falseCard() {
   // If rounds are maxed out, run end function:
-  if (roundsPlayed === MAX_ROUNDS) {
-    location.reload();
+  if (roundsPlayed === MAX_ROUNDS - 1) {
+    roundsPlayed++;
+    updateInfoWrong();
+    endGame();
     // Otherwise add point and round, and shuffle cards again:
   } else {
-    console.log("Wrong");
     roundsPlayed += 1;
-    console.log(`Rounds played: ${roundsPlayed}`);
-    console.log(`Points: ${points}`);
+    updateInfoWrong();
     savePlayerScore();
 
     showLeaderBoard();
 
     shuffleFunc();
   }
+}
+
+function updateInfoCorrect() {
+  let gameInfoEl = document.getElementById("game__info");
+  gameInfoEl.innerHTML = `Correct!<br>Rounds played:<br>${roundsPlayed} of ${MAX_ROUNDS}.<br>Points: ${points}`;
+}
+
+function updateInfoWrong() {
+  let gameInfoEl = document.getElementById("game__info");
+  gameInfoEl.innerHTML = `Wrong!<br>Rounds played:<br>${roundsPlayed} of ${MAX_ROUNDS}.<br>Points: ${points}`;
 }
 
 // ---------------------------------------------
@@ -305,7 +322,7 @@ function shuffleCardsOnce() {
     const cardEl = cardEls[card];
 
     cardEl.style.zIndex = Math.ceil(Math.random() * 5) + 1;
-    cardEl.style.translate = `${CARD_WIDTH * i}px`;
+    cardEl.style.translate = `${i * (CARD_WIDTH + CARD_SPACING)}px`;
   }
 }
 
@@ -342,6 +359,34 @@ function enableCardPointerEvents() {
   cardEls.forEach((cardEl) => {
     cardEl.classList.remove("shuffle-in-progress");
   });
+}
+
+// ---------------------------------------------
+// ---------------------------------------------
+// END-GAME SCREEN FUNCTIONALITY
+// ---------------------------------------------
+// ---------------------------------------------
+
+function endGame() {
+  savePlayerScore();
+  showLeaderBoard();
+
+  cardsRemoveFlipped();
+
+  setTimeout(displayEndBoard, GAME_OVER_PAUSE);
+
+  function displayEndBoard() {
+    let endEl = document.querySelector(".game__over");
+    endEl.style.display = "flex";
+
+    let scoreEl = document.querySelector(".score");
+    scoreEl.textContent = `You scored ${points} out of ${MAX_ROUNDS}!`;
+
+    let button = document.querySelector(".restart__button");
+    button.addEventListener("click", function () {
+      location.reload();
+    });
+  }
 }
 
 // ---------------------------------------------
