@@ -1,5 +1,26 @@
 const CARD_WIDTH = 200;
-const AMOUNT_OF_SHUFFLES = 3;
+const CARD_SPACING = 50;
+const AMOUNT_OF_SHUFFLES = 10;
+const MAX_ROUNDS = 5;
+const SHUFFLE_SPEED = 350;
+
+const FLIP_ANIMATION_TIME = 500;
+const FLIP_PAUSE = 500;
+
+const CARD_FLIP_TIMEOUT = FLIP_ANIMATION_TIME * 2 + FLIP_PAUSE;
+
+// Needs to be 1000 ms less than SHUFFLE_TIMEOUT
+// to allow the cards time to flip (500 ms forward and backward).
+const SHUFFLE_TIMEOUT = CARD_FLIP_TIMEOUT + FLIP_ANIMATION_TIME * 2;
+
+const TOTAL_SHUFFLE_TIME = SHUFFLE_TIMEOUT + SHUFFLE_SPEED * AMOUNT_OF_SHUFFLES;
+
+let cardEls = document.querySelectorAll(".card");
+let buttonStart = document.querySelector(".button-start");
+
+let points = 0;
+let roundsPlayed = 0;
+let cards = [0, 1, 2];
 
 /*------------------------------------------------
  CREATE PLAYER AND SAVE IN LEADERBOARD
@@ -114,79 +135,164 @@ function showLeaderBoard() {
   }
 }
 
-/*------------------------------------------------
- Cards - shuffle 
-------------------------------------------------*/
-let cardEls = document.querySelectorAll(".card");
-let buttonStart = document.querySelector(".button-start");
+// ---------------------------------------------
+// ---------------------------------------------
+// GAME FUNCTIONALITY
+// ---------------------------------------------
+// ---------------------------------------------
 
-let points = 0;
-let roundsPlayed = 0;
-let cards = [0, 1, 2];
+//
+
+// Game Setup:
 
 buttonStart.addEventListener("click", function () {
   startGame();
 });
 
-shuffleCards();
+cardsAddFlipped();
+shuffleCardsOnce();
+showLeaderBoard();
+
+// Starts the game when clicking the START button:
 
 function startGame() {
-  // ----- When you click on single card ----------------
-  showLeaderBoard(); // This line is added to display the leaderboard before the game starts
+  //
+  // Add correctCard function to the right card:
 
   let correctEl = document.querySelector(".card--red");
   correctEl.addEventListener("click", function () {
-    if (roundsPlayed === 5) {
-      location.reload();
-    } else {
-      roundsPlayed += 1;
-      points += 1;
-      console.log("Correct");
-      console.log(`Rounds played: ${roundsPlayed}`);
-      console.log(`Points: ${points}`);
-      playRound();
-      showLeaderBoard();
-    }
+    correctCard();
   });
+
+  // Add falseCard function to the wrong cards:
 
   let falseElBlue = document.querySelector(".card--blue");
   falseElBlue.addEventListener("click", function () {
-    //falseElBlue.classList.remove("card--flipped");
     falseCard();
   });
 
   let falseElGreen = document.querySelector(".card--green");
   falseElGreen.addEventListener("click", function () {
-    //falseElBlue.classList.remove("card--flipped");
     falseCard();
   });
 
-  correctEl.classList.add("card--flipped");
-  falseElBlue.classList.add("card--flipped");
-  falseElGreen.classList.add("card--flipped");
+  // The first round is run here automatically when the player
+  // presses START. Subsequent rounds run with the event listeners above.
+
+  // Cards are flipped.
+
+  flipAllCards();
+
+  // Cards are shuffled.
 
   setTimeout(function () {
-    playRound();
-  }, 1500);
+    roundOfShuffles();
+  }, SHUFFLE_TIMEOUT);
 }
 
-function falseCard() {
-  if (roundsPlayed === 5) {
+// This function runs when the correct card is clicked:
+
+function correctCard() {
+  //
+  // If rounds are maxed out, run end-game function:
+
+  if (roundsPlayed === MAX_ROUNDS) {
     location.reload();
+    // Otherwise add one point and a round, and run the shuffle function:
+  } else {
+    roundsPlayed += 1;
+    points += 1;
+    console.log("Correct");
+    console.log(`Rounds played: ${roundsPlayed}`);
+    console.log(`Points: ${points}`);
+
+    showLeaderBoard();
+    shuffleFunc();
+  }
+}
+
+// This function runs if the wrong card is picked:
+
+function falseCard() {
+  // If rounds are maxed out, run end function:
+  if (roundsPlayed === MAX_ROUNDS) {
+    location.reload();
+    // Otherwise add point and round, and shuffle cards again:
   } else {
     console.log("Wrong");
     roundsPlayed += 1;
     console.log(`Rounds played: ${roundsPlayed}`);
     console.log(`Points: ${points}`);
     savePlayerScore();
-    playRound();
+
     showLeaderBoard();
+
+    shuffleFunc();
   }
 }
 
-// ----- Shuffle cards ----------------
+// ---------------------------------------------
+// ---------------------------------------------
+// CARD FLIP FUNCTIONALITY
+// ---------------------------------------------
+// ---------------------------------------------
 
-function shuffleCards() {
+function flipCard(e) {
+  const clickedCard = e.currentTarget;
+  clickedCard.classList.toggle("flipCard");
+}
+
+// This function flips all cards once, and flips them back
+// after a timeout:
+
+function flipAllCards() {
+  cardsRemoveFlipped();
+  setTimeout(cardsAddFlipped, CARD_FLIP_TIMEOUT);
+}
+
+// Function for adding the card--flipped class to all the cards:
+
+function cardsAddFlipped() {
+  let cardEl1 = document.querySelector(".card--red");
+  let cardEl2 = document.querySelector(".card--blue");
+  let cardEl3 = document.querySelector(".card--green");
+
+  cardEl1.classList.add("card--flipped");
+  cardEl2.classList.add("card--flipped");
+  cardEl3.classList.add("card--flipped");
+}
+
+// Function for removing it:
+
+function cardsRemoveFlipped() {
+  let cardEl1 = document.querySelector(".card--red");
+  let cardEl2 = document.querySelector(".card--blue");
+  let cardEl3 = document.querySelector(".card--green");
+
+  cardEl1.classList.remove("card--flipped");
+  cardEl2.classList.remove("card--flipped");
+  cardEl3.classList.remove("card--flipped");
+}
+
+// ---------------------------------------------
+// ---------------------------------------------
+// CARD SHUFFLE FUNCTIONALITY
+// ---------------------------------------------
+// ---------------------------------------------
+
+// This function runs the function disabling click possibility
+// while the cards are shuffling. Then it flips the cards
+// and shuffles them.
+
+function shuffleFunc() {
+  disableCardPointerEvents();
+  flipAllCards();
+  setTimeout(roundOfShuffles, SHUFFLE_TIMEOUT);
+}
+
+// Functionality for one instance of card shuffling:
+
+function shuffleCardsOnce() {
   let cardShuffle;
   do {
     cardShuffle = cards.slice().sort(() => Math.random() - 0.5);
@@ -203,22 +309,46 @@ function shuffleCards() {
   }
 }
 
-function playRound() {
-  // for (let cardEl of cardEls) {
-  //   cardEl.classList.add("card--flipped");
-  // }
+// This function runs the shuffling instance a set number of times
+// and then re-adds the pointer events (clickability):
 
+function roundOfShuffles() {
   let count = 0;
   let interval = setInterval(function () {
-    shuffleCards();
+    shuffleCardsOnce();
     count += 1;
 
     // Exit interval
     if (count === AMOUNT_OF_SHUFFLES) {
+      enableCardPointerEvents();
       clearInterval(interval);
     }
-  }, 400);
+  }, SHUFFLE_SPEED);
 }
+
+// ---------------------------------------------
+// ---------------------------------------------
+// DISABLE/ENABLE POINTER EVENTS
+// ---------------------------------------------
+// ---------------------------------------------
+
+function disableCardPointerEvents() {
+  cardEls.forEach((cardEl) => {
+    cardEl.classList.add("shuffle-in-progress");
+  });
+}
+
+function enableCardPointerEvents() {
+  cardEls.forEach((cardEl) => {
+    cardEl.classList.remove("shuffle-in-progress");
+  });
+}
+
+// ---------------------------------------------
+// ---------------------------------------------
+// FUNCTION FOR COMPARING THE CARD ARRAYS
+// ---------------------------------------------
+// ---------------------------------------------
 
 function arraysEqual(arr1, arr2) {
   if (arr1.length !== arr2.length) {
@@ -230,17 +360,4 @@ function arraysEqual(arr1, arr2) {
     }
   }
   return true;
-}
-
-/* - - - - - - - - - - - - - - - - -
-  "Flip the card" functionality:
- - - - - - - - - - - - - - - - - - - */
-
-cardEls.forEach(function (card) {
-  card.addEventListener("click", flipCard);
-});
-
-function flipCard(e) {
-  const clickedCard = e.currentTarget;
-  clickedCard.classList.toggle("flipCard");
 }

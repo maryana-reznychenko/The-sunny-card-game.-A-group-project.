@@ -135,6 +135,16 @@ footer {
   width: 600px;
 }
 
+.card__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  display: none;
+}
+
 .card {
   transform-style: preserve-3d;
   transition: transform 0.5s;
@@ -145,6 +155,10 @@ footer {
   left: 0;
   transition: translate 400ms linear, transform 500ms ease-out;
   border-radius: 1.5rem;
+}
+
+.card.shuffle-in-progress {
+  pointer-events: none; /* Disable pointer events during shuffle */
 }
 
 .card__front {
