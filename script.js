@@ -158,7 +158,6 @@ buttonStart.addEventListener("click", function () {
 });
 
 cardsAddFlipped();
-
 showLeaderBoard();
 
 // Starts the game when clicking the START button:
@@ -219,6 +218,7 @@ function falseCard() {
     roundsPlayed++;
     updateInfoWrong();
     endGame();
+
     // Otherwise add point and round, and shuffle cards again:
   } else {
     roundsPlayed += 1;
@@ -230,6 +230,8 @@ function falseCard() {
     shuffleFunc();
   }
 }
+
+// Functions for updating the game info:
 
 function updateInfoCorrect() {
   let gameInfoEl = document.getElementById("game__info");
