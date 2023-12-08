@@ -35,11 +35,11 @@
   background-color: red;
 }
 
-.card--green .card__front {
+.card--rain .card__front {
   background-color: green;
 }
 
-.card--blue .card__front {
+.card--snow .card__front {
   background-color: blue;
 }
 

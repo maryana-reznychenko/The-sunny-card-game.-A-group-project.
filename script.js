@@ -1,7 +1,7 @@
 const CARD_WIDTH = 200;
 const CARD_SPACING = 25;
 const AMOUNT_OF_SHUFFLES = 10;
-const MAX_ROUNDS = 10;
+const MAX_ROUNDS = 6;
 const SHUFFLE_SPEED = 400;
 
 const CARD_SPREAD_PAUSE = 1000;
@@ -166,19 +166,19 @@ function startGame() {
   //
   // Add correctCard function to the right card:
 
-  let correctEl = document.querySelector(".card--red");
+  let correctEl = document.querySelector(".card--sun");
   correctEl.addEventListener("click", function () {
     correctCard();
   });
 
   // Add falseCard function to the wrong cards:
 
-  let falseElBlue = document.querySelector(".card--blue");
+  let falseElBlue = document.querySelector(".card--snow");
   falseElBlue.addEventListener("click", function () {
     falseCard();
   });
 
-  let falseElGreen = document.querySelector(".card--green");
+  let falseElGreen = document.querySelector(".card--rain");
   falseElGreen.addEventListener("click", function () {
     falseCard();
   });
@@ -196,6 +196,7 @@ function correctCard() {
   // If rounds are maxed out, run end-game function:
 
   if (roundsPlayed === MAX_ROUNDS - 1) {
+    console.log("max round-1", MAX_ROUNDS - 1);
     points += 1;
     roundsPlayed++;
     updateInfoCorrect();
@@ -205,7 +206,6 @@ function correctCard() {
     roundsPlayed += 1;
     points += 1;
     updateInfoCorrect();
-    showLeaderBoard();
     shuffleFunc();
   }
 }
@@ -223,24 +223,19 @@ function falseCard() {
   } else {
     roundsPlayed += 1;
     updateInfoWrong();
-    savePlayerScore();
-
-    showLeaderBoard();
-
     shuffleFunc();
   }
 }
 
 // Functions for updating the game info:
+let gameInfoEl = document.getElementById("game__info");
 
 function updateInfoCorrect() {
-  let gameInfoEl = document.getElementById("game__info");
   gameInfoEl.innerHTML = `<br>Correct!<br><br>Rounds played:<br>${roundsPlayed} of ${MAX_ROUNDS}.<br><br>Points: ${points}`;
 }
 
 function updateInfoWrong() {
-  let gameInfoEl = document.getElementById("game__info");
-  gameInfoEl.innerHTML = `<br>Wrong!<br><br>Rounds played:<br>${roundsPlayed} of ${MAX_ROUNDS}.<br><br>Points: ${points}`;
+  gameInfoEl.innerHTML = `<span>Wrong!</span><span>Rounds played:<br>${roundsPlayed} of ${MAX_ROUNDS}.</span><span>Points: ${points}</span>`;
 }
 
 // ---------------------------------------------
@@ -265,9 +260,9 @@ function flipAllCards() {
 // Function for adding the card--flipped class to all the cards:
 
 function cardsAddFlipped() {
-  let cardEl1 = document.querySelector(".card--red");
-  let cardEl2 = document.querySelector(".card--blue");
-  let cardEl3 = document.querySelector(".card--green");
+  let cardEl1 = document.querySelector(".card--sun");
+  let cardEl2 = document.querySelector(".card--snow");
+  let cardEl3 = document.querySelector(".card--rain");
 
   cardEl1.classList.add("card--flipped");
   cardEl2.classList.add("card--flipped");
@@ -277,9 +272,9 @@ function cardsAddFlipped() {
 // Function for removing it:
 
 function cardsRemoveFlipped() {
-  let cardEl1 = document.querySelector(".card--red");
-  let cardEl2 = document.querySelector(".card--blue");
-  let cardEl3 = document.querySelector(".card--green");
+  let cardEl1 = document.querySelector(".card--sun");
+  let cardEl2 = document.querySelector(".card--snow");
+  let cardEl3 = document.querySelector(".card--rain");
 
   cardEl1.classList.remove("card--flipped");
   cardEl2.classList.remove("card--flipped");
@@ -371,7 +366,7 @@ function endGame() {
   setTimeout(displayEndBoard, GAME_OVER_PAUSE);
 
   function displayEndBoard() {
-    let endEl = document.querySelector(".game__over");
+    let endEl = document.querySelector(".game-over");
     endEl.style.display = "flex";
 
     let scoreEl = document.querySelector(".score");

@@ -2,18 +2,15 @@
 * {
   box-sizing: border-box;
   margin: 0;
-  font-family: monospace;
-  font-size: 20px;
+  font-family: "Poppins", sans-serif;
   color: white;
-  letter-spacing: 1px;
 }
 
 :root {
   --color-primary: #ff3b30;
   --color-secondary: #02763c;
   --color-bg: #008844;
-  --color-primary-card-front: rgb(60, 36, 178);
-  --color-primary-card-back: rgb(250, 224, 29);
+  --color-tertiary: #ffd630;
 }
 
 /* Global */
@@ -32,6 +29,7 @@ button {
   border-radius: 76px;
   border: 0;
   background: var(--color-secondary);
+  font-size: 20px;
 }
 
 button:hover {
@@ -45,12 +43,18 @@ input {
   padding: 1rem;
   outline: none;
 }
+
 select {
   background: none;
   border: none;
   margin-right: 1rem;
   font-size: 24px;
   outline: none;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
 }
 
 footer {
@@ -73,6 +77,9 @@ footer {
   align-items: center;
 }
 
+.container-header span {
+  color: var(--color-tertiary);
+}
 .button-start {
   background: var(--color-primary);
   margin-right: 1rem;
@@ -100,23 +107,41 @@ footer {
 .container__input {
   background: var(--color-secondary);
   position: absolute;
-  height: 300px;
-  width: 87vw;
+  left: 150px;
+  top: 190px;
+  height: 350px;
+  width: 55vw;
   border-radius: 1.5rem;
   z-index: 7;
   display: flex;
   text-align: center;
   justify-content: center;
   align-items: center;
+  box-shadow: 0.954px 9.54px 9.54px 0px rgba(57, 55, 75, 0.1);
+}
+
+@media (max-width: 1300px) {
+  .container__input {
+    width: 75vw;
+    height: 75vh;
+    top: auto;
+    left: auto;
+  }
 }
 
 .small__container {
-  background-color: #02763c;
-  padding: 1.5rem;
-  margin: 0 2rem;
+  background: var(--color-secondary);
   height: 300px;
+  padding: 1rem;
+  float: right;
+  border-radius: 16px;
+  box-shadow: 1.377px 13.774px 13.774px 0px rgba(57, 55, 75, 0.1);
+}
 
-  border-radius: 1.5rem;
+.small__container h2 {
+  border-bottom: 3px solid white;
+  padding: 0rem 0rem 0.5rem 0.5rem;
+  border-radius: 2px;
 }
 
 .container__gameinfo {
@@ -125,19 +150,33 @@ footer {
 }
 
 #game__info {
-  font-size: 0.8rem;
+  padding: 1rem;
+}
+
+#game__info span {
+  display: block;
+  padding-bottom: 1rem;
+}
+
+.gameInfo-correct {
+  font-weight: 500;
+  color: #ffe330;
+  padding-bottom: 1rem;
+}
+
+.gameInfo-rounds {
+  padding-bottom: 1rem;
 }
 
 .container__card-score {
-  width: 250px;
+  width: 200px;
 }
 
 .hide-input {
   display: none;
 }
 
-.game__over {
-  display: flex;
+.game-over {
   flex-direction: column;
   position: absolute;
   top: 50%;
@@ -147,14 +186,27 @@ footer {
   justify-content: center;
   height: 80vh;
   width: 80vw;
-  border-bottom: 3px solid white;
-  background-color: #0a4e14;
+  border-radius: 1.5rem;
+  background: var(--color-secondary);
   color: #0a4e14;
   font-weight: 400;
   font-size: 24px;
   z-index: 100;
-
   display: none;
+  box-shadow: 0.954px 9.54px 9.54px 0px rgba(57, 55, 75, 0.1);
+}
+
+.game-over__text {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.score {
+  font-weight: 300;
+}
+.restart__button {
+  background-color: var(--color-primary);
+  margin-top: 2rem;
 }
 
 .input-player {
@@ -219,43 +271,35 @@ footer {
 .card__front {
   width: 100%;
   height: 100%;
-  background-color: var(--color-primary-card-front);
   position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   backface-visibility: hidden;
-
   border-radius: 1.5rem;
+  box-shadow: 1.141px 11.406px 11.406px 0px rgba(57, 55, 75, 0.1);
 }
 
 .card__back {
   width: 100%;
   height: 100%;
-  background-color: var(--color-primary-card-back);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   transform: rotateY(180deg);
   backface-visibility: visible;
-  background-color: salmon;
-  border: 5px solid red;
   position: absolute;
   backface-visibility: hidden;
-
-  border-radius: 1.5rem;
+  box-shadow: 1.141px 11.406px 11.406px 0px rgba(57, 55, 75, 0.1);
 }
 
-.card--red .card__front {
-  background-color: red;
+.card--sun .card__front {
+  background-image: url(./media/card__front--sun.svg);
+  background-color: #ffe330;
 }
 
-.card--green .card__front {
-  background-color: green;
+.card--rain .card__front {
+  background-image: url(./media/card__front--rain.svg);
+  background-color: rgb(23, 0, 128);
 }
 
-.card--blue .card__front {
-  background-color: blue;
+.card--snow .card__front {
+  background-image: url(./media/card__front--snow.svg);
+  background-color: rgb(0, 242, 255);
 }
 
 .card--flipped {
@@ -265,4 +309,23 @@ footer {
 /* this class from JS to rotate the card  */
 .flipCard {
   transform: rotateY(180deg);
+}
+
+/* LEADERBOARD STYLE  */
+
+.leaderBoard-li {
+  margin: 0.5rem 0;
+}
+
+.leaderBoard-icon {
+  margin-right: 0.5rem;
+}
+
+.leaderBoard-name {
+  margin-right: 2rem;
+}
+
+.leaderBoard-score {
+  font-weight: 700;
+  float: right;
 }
