@@ -11,7 +11,7 @@
     <div class="container-header">
       <h1>Can you guess where the sunny card is?</h1>
       <div class="container__buttons">
-        <button class="button-start" type="button">Start</button>
+        <button class="button-start button-off" type="button">Start</button>
       </div>
     </div>
     <div class="container__main">
@@ -27,27 +27,44 @@
         <button type="submit">Submit</button>
       </form>
 
+      <div class="game__over">
+        <div class="game__over__text">Game Over!</div>
+        <br />
+
+        <div class="score"></div>
+        <br />
+        <br />
+        <button class="restart__button">New Game</button>
+      </div>
+
+      <div class="small__container container__gameinfo">
+        <h2>Game Info:</h2>
+        <div id="game__info"></div>
+      </div>
+
       <section class="game_container">
         <div class="container__cards">
-          <div class="card card--red">
+          <div class="card card--red card--flipped">
             <div class="card__front"></div>
             <div class="card__back"></div>
           </div>
 
-          <div class="card card--green">
+          <div class="card card--green card--flipped">
             <div class="card__front"></div>
             <div class="card__back"></div>
           </div>
 
-          <div class="card card--blue">
+          <div class="card card--blue card--flipped">
             <div class="card__front"></div>
             <div class="card__back"></div>
           </div>
         </div>
+        <div class="card__overlay"></div>
       </section>
 
-      <div class="container__card-score">
-        <div>Score:</div>
+      <div class="container__card-score small__container">
+        <h2>Score:</h2>
+        <br />
         <ul id="leaderBoard"></ul>
       </div>
     </div>
