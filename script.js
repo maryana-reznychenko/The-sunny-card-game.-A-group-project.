@@ -1,17 +1,19 @@
 const CARD_WIDTH = 200;
 const CARD_SPACING = 25;
 const AMOUNT_OF_SHUFFLES = 10;
-const MAX_ROUNDS = 3;
+const MAX_ROUNDS = 10;
 const SHUFFLE_SPEED = 400;
+
+const CARD_SPREAD_PAUSE = 1000;
 
 const FLIP_ANIMATION_TIME = 500;
 const FLIP_PAUSE = 500;
 
 const CARD_FLIP_TIMEOUT = FLIP_ANIMATION_TIME * 2 + FLIP_PAUSE;
 
+const SHUFFLE_TIMEOUT = CARD_FLIP_TIMEOUT + FLIP_ANIMATION_TIME * 2;
 // Needs to be 1000 ms less than SHUFFLE_TIMEOUT
 // to allow the cards time to flip (500 ms forward and backward).
-const SHUFFLE_TIMEOUT = CARD_FLIP_TIMEOUT + FLIP_ANIMATION_TIME * 2;
 
 const TOTAL_SHUFFLE_TIME = SHUFFLE_TIMEOUT + SHUFFLE_SPEED * AMOUNT_OF_SHUFFLES;
 
@@ -55,7 +57,7 @@ playerFormEl.addEventListener("submit", function (e) {
   // Hide the player input form
 
   buttonStart.classList.remove("button-off"); // Activate the START button.
-  setTimeout(shuffleCardsOnce, 500);
+  setTimeout(shuffleCardsOnce, CARD_SPREAD_PAUSE);
 });
 
 // Function to retrieve leaderboard data from local storage
@@ -185,15 +187,6 @@ function startGame() {
   // The first round is run here automatically when the player
   // presses START. Subsequent rounds run with the event listeners above.
 
-  // Cards are flipped.
-
-  /*   flipAllCards();
-
-  // Cards are shuffled.
-
-  setTimeout(function () {
-    roundOfShuffles();
-  }, SHUFFLE_TIMEOUT); */
   shuffleFunc();
 }
 
@@ -240,12 +233,12 @@ function falseCard() {
 
 function updateInfoCorrect() {
   let gameInfoEl = document.getElementById("game__info");
-  gameInfoEl.innerHTML = `Correct!<br>Rounds played:<br>${roundsPlayed} of ${MAX_ROUNDS}.<br>Points: ${points}`;
+  gameInfoEl.innerHTML = `<br>Correct!<br><br>Rounds played:<br>${roundsPlayed} of ${MAX_ROUNDS}.<br><br>Points: ${points}`;
 }
 
 function updateInfoWrong() {
   let gameInfoEl = document.getElementById("game__info");
-  gameInfoEl.innerHTML = `Wrong!<br>Rounds played:<br>${roundsPlayed} of ${MAX_ROUNDS}.<br>Points: ${points}`;
+  gameInfoEl.innerHTML = `<br>Wrong!<br><br>Rounds played:<br>${roundsPlayed} of ${MAX_ROUNDS}.<br><br>Points: ${points}`;
 }
 
 // ---------------------------------------------
