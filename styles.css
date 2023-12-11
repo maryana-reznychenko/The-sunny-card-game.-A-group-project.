@@ -75,8 +75,8 @@ footer {
   background: var(--color-secondary);
   border-radius: 76px;
   padding: 1rem;
-  width: 85%;
-  margin: 0rem auto 0 auto;
+  width: 80%;
+  margin: 3rem auto 0 auto;
   text-align: center;
   font-weight: 100;
   font-size: 16px;
@@ -121,10 +121,10 @@ footer {
 .container__input {
   background: var(--color-secondary);
   position: absolute;
-  left: 120px;
-  top: 170px;
-  height: 420px;
-  width: 62vw;
+  left: 10%;
+  top: 24%;
+  height: 411px;
+  width: 59vw;
   border-radius: 1.5rem;
   z-index: 7;
   display: flex;
@@ -138,7 +138,8 @@ footer {
   display: flex;
   width: 40vw;
   align-self: center;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 2rem;
 }
 
 @media (max-width: 1300px) {
@@ -200,12 +201,12 @@ footer {
 .game-over {
   flex-direction: column;
   position: absolute;
-  top: 50%;
+  top: 42%;
   left: 50%;
   transform: translate(-50%, -50%);
   align-items: center;
   justify-content: center;
-  height: 80vh;
+  height: 64vh;
   width: 80vw;
   border-radius: 1.5rem;
   background: var(--color-secondary);
