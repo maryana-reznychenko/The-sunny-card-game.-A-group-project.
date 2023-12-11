@@ -1,6 +1,7 @@
 const CARD_WIDTH = 200;
 const CARD_SPACING = 25;
 const AMOUNT_OF_SHUFFLES = 10;
+
 const MAX_ROUNDS = 6;
 let SHUFFLE_SPEED = 250;
 
