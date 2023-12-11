@@ -2,7 +2,7 @@ const CARD_WIDTH = 200;
 const CARD_SPACING = 25;
 const AMOUNT_OF_SHUFFLES = 10;
 const MAX_ROUNDS = 6;
-const SHUFFLE_SPEED = 400;
+let SHUFFLE_SPEED = 250;
 
 const CARD_SPREAD_PAUSE = 1000;
 
@@ -56,7 +56,7 @@ playerFormEl.addEventListener("submit", function (e) {
   showLeaderBoard(); // This line is added to display the leaderboard before the game starts
   // Hide the player input form
 
-  buttonStart.classList.remove("button-off"); // Activate the START button.
+  speedButtons();
   setTimeout(shuffleCardsOnce, CARD_SPREAD_PAUSE);
 });
 
@@ -395,4 +395,50 @@ function arraysEqual(arr1, arr2) {
     }
   }
   return true;
+}
+
+function speedButtons() {
+  let easyBtnEl = document.getElementById("easy");
+  let mediumBtnEl = document.getElementById("medium");
+  let hardBtnEl = document.getElementById("hard");
+
+  easyBtnEl.addEventListener("click", function () {
+    setSpeed(400);
+    console.log("Speed set 400");
+    deactivateSpeedButtons();
+  });
+
+  mediumBtnEl.addEventListener("click", function () {
+    setSpeed(300);
+    console.log("Speed set 300");
+    deactivateSpeedButtons();
+  });
+
+  hardBtnEl.addEventListener("click", function () {
+    setSpeed(250);
+    console.log("Speed set 250");
+    deactivateSpeedButtons();
+  });
+}
+
+function setSpeed(speed) {
+  SHUFFLE_SPEED = speed;
+  const card = document.querySelector(".card");
+
+  cardEls.forEach((cardEl) => {
+    cardEl.style.transition = ""; // Resetting inline style
+  });
+  card.style.transition = `translate ${speed}ms linear, transform 500ms ease-out`;
+}
+
+function deactivateSpeedButtons() {
+  let easyBtnEl = document.getElementById("easy");
+  let mediumBtnEl = document.getElementById("medium");
+  let hardBtnEl = document.getElementById("hard");
+
+  easyBtnEl.classList.add("button-off-difficulty");
+  mediumBtnEl.classList.add("button-off-difficulty");
+  hardBtnEl.classList.add("button-off-difficulty");
+
+  buttonStart.classList.remove("button-off");
 }
