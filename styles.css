@@ -216,7 +216,8 @@ footer {
   box-shadow: 0.954px 9.54px 9.54px 0px rgba(57, 55, 75, 0.1);
 }
 
-.game-over__text {
+.game-over__text,
+h3 {
   font-size: 2rem;
   font-weight: 500;
 }
