@@ -24,7 +24,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 3rem;
+  gap: 2rem;
   height: 100vh;
 }
 
@@ -76,7 +76,7 @@ footer {
   border-radius: 76px;
   padding: 1rem;
   width: 80%;
-  margin: 3rem auto 0 auto;
+  margin: 0 auto 0 auto;
   text-align: center;
   font-weight: 100;
   font-size: 16px;
@@ -96,7 +96,6 @@ footer {
 }
 .button-start {
   background: var(--color-primary);
-  margin-right: 1rem;
 }
 .button-start:hover {
   box-shadow: 0px 7px 6px 0px rgba(99, 29, 25, 0.25) inset;
@@ -140,6 +139,15 @@ footer {
   align-self: center;
   justify-content: center;
   gap: 2rem;
+}
+
+.container__buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.container__buttons {
+  visibility: hidden;
 }
 
 @media (max-width: 1300px) {

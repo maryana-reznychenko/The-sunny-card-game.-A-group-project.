@@ -439,6 +439,11 @@ function deactivateSpeedButtons() {
   let easyBtnEl = document.getElementById("easy");
   let mediumBtnEl = document.getElementById("medium");
   let hardBtnEl = document.getElementById("hard");
+  let startContainer = document.querySelector(".container__buttons");
+  let diffContainer = document.querySelector(".difficulty_button_container");
+
+  startContainer.style.visibility = "visible";
+  //diffContainer.style.visibility = "hidden";
 
   easyBtnEl.classList.add("button-off-difficulty");
   mediumBtnEl.classList.add("button-off-difficulty");
