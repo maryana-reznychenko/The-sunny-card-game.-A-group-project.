@@ -406,18 +406,21 @@ function speedButtons() {
     setSpeed(400);
     console.log("Speed set 400");
     deactivateSpeedButtons();
+    easyBtnEl.classList.add("button-off-difficulty-selected");
   });
 
   mediumBtnEl.addEventListener("click", function () {
     setSpeed(300);
     console.log("Speed set 300");
     deactivateSpeedButtons();
+    mediumBtnEl.classList.add("button-off-difficulty-selected");
   });
 
   hardBtnEl.addEventListener("click", function () {
     setSpeed(250);
     console.log("Speed set 250");
     deactivateSpeedButtons();
+    hardBtnEl.classList.add("button-off-difficulty-selected");
   });
 }
 
