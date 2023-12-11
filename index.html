@@ -5,11 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Guess the sun</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
   </head>
 
   <body>
     <div class="container-header">
-      <h1>Can you guess where the sunny card is?</h1>
+      <h1>Can you guess where the <span>☀️ sunny ☀️</span> card is?</h1>
       <div class="container__buttons">
         <button class="button-start button-off" type="button">Start</button>
       </div>
@@ -27,13 +35,9 @@
         <button type="submit">Submit</button>
       </form>
 
-      <div class="game__over">
-        <div class="game__over__text">Game Over!</div>
-        <br />
-
+      <div class="game-over">
+        <div class="game-over__text">Game Over!</div>
         <div class="score"></div>
-        <br />
-        <br />
         <button class="restart__button">New Game</button>
       </div>
 
@@ -44,19 +48,19 @@
 
       <section class="game_container">
         <div class="container__cards">
-          <div class="card card--red card--flipped">
+          <div class="card card--sun card--flipped">
             <div class="card__front"></div>
-            <div class="card__back"></div>
+            <img class="card__back" src="./media/card-back.svg" />
           </div>
 
-          <div class="card card--green card--flipped">
+          <div class="card card--rain card--flipped">
             <div class="card__front"></div>
-            <div class="card__back"></div>
+            <img class="card__back" src="./media/card-back.svg" />
           </div>
 
-          <div class="card card--blue card--flipped">
+          <div class="card card--snow card--flipped">
             <div class="card__front"></div>
-            <div class="card__back"></div>
+            <img class="card__back" src="./media/card-back.svg" />
           </div>
         </div>
         <div class="card__overlay"></div>
