@@ -10,7 +10,7 @@
   --color-primary: #ff3b30;
   --color-secondary: #02763c;
   --color-bg: #008844;
-  --color-tertiary: #ffe630;
+  --color-tertiary: #ffd630;
 }
 
 h3 {
@@ -75,7 +75,7 @@ footer {
   background: var(--color-secondary);
   border-radius: 76px;
   padding: 1rem;
-  width: 70%;
+  width: 85%;
   margin: 0rem auto 0 auto;
   text-align: center;
   font-weight: 100;
@@ -121,10 +121,10 @@ footer {
 .container__input {
   background: var(--color-secondary);
   position: absolute;
-  left: 150px;
-  top: 190px;
-  height: 350px;
-  width: 55vw;
+  left: 120px;
+  top: 170px;
+  height: 420px;
+  width: 62vw;
   border-radius: 1.5rem;
   z-index: 7;
   display: flex;
@@ -181,7 +181,7 @@ footer {
 
 .gameInfo-correct {
   font-weight: 500;
-  color: var(--color-tertiary);
+  color: #ffe330;
   padding-bottom: 1rem;
 }
 
@@ -216,8 +216,7 @@ footer {
   box-shadow: 0.954px 9.54px 9.54px 0px rgba(57, 55, 75, 0.1);
 }
 
-.game-over__text,
-h3 {
+.game-over__text {
   font-size: 2rem;
   font-weight: 500;
 }
@@ -228,6 +227,7 @@ h3 {
   font-weight: 300;
   text-align: center;
 }
+
 .restart__button {
   background-color: var(--color-primary);
   margin-top: 2rem;
