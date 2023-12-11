@@ -445,3 +445,36 @@ function deactivateSpeedButtons() {
 
   buttonStart.classList.remove("button-off");
 }
+
+// ---------------------------------------------
+// ---------------------------------------------
+// THE THIRD PART API https://rapidapi.com/zugravuandrei/api/sun-seeker-api
+// ---------------------------------------------
+// ---------------------------------------------
+
+async function getTheSunData() {
+  const url =
+    "https://sun-seeker-api.p.rapidapi.com/sunposition?lat=59.301292&lon=18.090621";
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": "5ef46fd157msh1d075513f6e7d12p11a071jsn8ff171b91272",
+      "X-RapidAPI-Host": "sun-seeker-api.p.rapidapi.com",
+    },
+  };
+
+  try {
+    const response = await fetch(url, options);
+    const result = await response.json();
+    console.log(result);
+
+    let azimuthEl = document.querySelector("#azimuth");
+    azimuthEl.textContent = `The sun azimuth --> ${result.azimuth}˚`;
+
+    let elevationEl = document.querySelector("#elevation");
+    elevationEl.textContent = `The sun elevation --> ${result.elevation}˚`;
+  } catch (error) {
+    console.error(error);
+  }
+}
+getTheSunData();
