@@ -140,6 +140,7 @@ footer {
   align-self: center;
   justify-content: center;
   gap: 2rem;
+  align-items: center;
 }
 
 @media (max-width: 1300px) {
