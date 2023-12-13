@@ -74,7 +74,7 @@ function getLeaderboard() {
       if (Array.isArray(playersInLocalStorage)) {
         players = playersInLocalStorage;
       }
-    } catch (err) {}
+    } catch (err) { }
   }
   return players;
 }
@@ -464,7 +464,7 @@ async function getTheSunData() {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "5ef46fd157msh1d075513f6e7d12p11a071jsn8ff171b91272",
+      "X-RapidAPI-Key": 'edb4d9b941mshaedf8077621635bp1b8510jsn9e449fa20f2a',
       "X-RapidAPI-Host": "sun-seeker-api.p.rapidapi.com",
     },
   };
@@ -475,10 +475,13 @@ async function getTheSunData() {
     console.log(result);
 
     let azimuthEl = document.querySelector("#azimuth");
-    azimuthEl.textContent = `The sun azimuth --> ${result.azimuth}˚`;
+    azimuthEl.textContent = `The sun azimuth --> ${Math.floor(result.azimuth)}˚`;
+
 
     let elevationEl = document.querySelector("#elevation");
-    elevationEl.textContent = `The sun elevation --> ${result.elevation}˚`;
+    elevationEl.textContent = `The sun elevation --> ${Math.floor(result.elevation)}˚`;
+
+
   } catch (error) {
     console.error(error);
   }

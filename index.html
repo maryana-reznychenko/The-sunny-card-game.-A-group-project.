@@ -1,89 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Guess the sun</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
-  </head>
 
-  <body>
-    <div class="container-header">
-      <h1>Can you guess where the <span>☀️ sunny ☀️</span> card is?</h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guess the sun</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body>
+  <div class="container-header">
+    <h1>Can you guess where the <span>☀️ sunny ☀️</span> card is?</h1>
+  </div>
+  <div class="container__main">
+    <form class="container__input" id="playerName">
+      <select name="icons" id="playerIcons">
+        <option value="sunglasses">😎</option>
+        <option value="disguised">🥸</option>
+        <option value="ghost">👻</option>
+        <option value="poop">💩</option>
+        <option value="monster">👾</option>
+      </select>
+      <input type="text" class="input-player" placeholder="Your Name" />
+      <button type="submit">Submit</button>
+    </form>
+
+    <div class="game-over">
+      <div class="game-over__text">Game Over!</div>
+      <div class="score"></div>
+      <button class="restart__button">New Game</button>
+      <article id="api__message">
+        <h3>The current position of the sun relative to your place is:</h3>
+        <p id="azimuth"></p>
+        <p id="elevation"></p>
+      </article>
     </div>
-    <div class="container__main">
-      <form class="container__input" id="playerName">
-        <select name="icons" id="playerIcons">
-          <option value="sunglasses">😎</option>
-          <option value="disguised">🥸</option>
-          <option value="ghost">👻</option>
-          <option value="poop">💩</option>
-          <option value="monster">👾</option>
-        </select>
-        <input type="text" class="input-player" placeholder="Your Name" />
-        <button type="submit">Submit</button>
-      </form>
 
-      <div class="game-over">
-        <div class="game-over__text">Game Over!</div>
-        <div class="score"></div>
-        <button class="restart__button">New Game</button>
-        <article id="api__message">
-          <h3>The current position of the sun relative to your place is:</h3>
-          <p id="azimuth"></p>
-          <p id="elevation"></p>
-        </article>
-      </div>
+    <div class="small__container container__gameinfo">
+      <h2>Game Info:</h2>
+      <div id="game__info"></div>
+    </div>
 
-      <div class="small__container container__gameinfo">
-        <h2>Game Info:</h2>
-        <div id="game__info"></div>
-      </div>
-
-      <section class="game_container">
-        <div class="container__cards">
-          <div class="card card--sun card--flipped">
-            <div class="card__front"></div>
-            <img class="card__back" src="./media/card-back.svg" />
-          </div>
-
-          <div class="card card--rain card--flipped">
-            <div class="card__front"></div>
-            <img class="card__back" src="./media/card-back.svg" />
-          </div>
-
-          <div class="card card--snow card--flipped">
-            <div class="card__front"></div>
-            <img class="card__back" src="./media/card-back.svg" />
-          </div>
+    <section class="game_container">
+      <div class="container__cards">
+        <div class="card card--sun card--flipped">
+          <div class="card__front"></div>
+          <img class="card__back" src="./media/card-back.svg" />
         </div>
-        <div class="card__overlay"></div>
-      </section>
 
-      <div class="container__card-score small__container">
-        <h2>Score:</h2>
-        <br />
-        <ul id="leaderBoard"></ul>
+        <div class="card card--rain card--flipped">
+          <div class="card__front"></div>
+          <img class="card__back" src="./media/card-back.svg" />
+        </div>
+
+        <div class="card card--snow card--flipped">
+          <div class="card__front"></div>
+          <img class="card__back" src="./media/card-back.svg" />
+        </div>
       </div>
-    </div>
-    <div class="container__buttons">
-      <button class="button-start button-off" type="button">Start</button>
-    </div>
-    <div class="difficulty_button_container">
-      <button id="easy" class="button_difficulty">Easy</button>
-      <button id="medium" class="button_difficulty">Medium</button>
-      <button id="hard" class="button_difficulty">Hard</button>
-    </div>
+      <div class="card__overlay"></div>
+    </section>
 
-    <footer>This game is made by Maryana, Marcus and Carmela</footer>
-    <script src="script.js"></script>
-  </body>
+    <div class="container__card-score small__container">
+      <h2>Score:</h2>
+      <br />
+      <ul id="leaderBoard"></ul>
+    </div>
+  </div>
+  <div class="container__buttons">
+    <button class="button-start button-off" type="button">Start</button>
+  </div>
+  <div class="difficulty_button_container">
+    <button id="easy" class="button_difficulty">Easy</button>
+    <button id="medium" class="button_difficulty">Medium</button>
+    <button id="hard" class="button_difficulty">Hard</button>
+  </div>
+
+  <footer>This game is made by Maryana, Marcus and Carmela</footer>
+  <script src="script.js"></script>
+</body>
+
 </html>
