@@ -1,13 +1,14 @@
-/* Reset */
+/* RESET */
 * {
   box-sizing: border-box;
   margin: 0;
   font-family: "Poppins", sans-serif;
-  color: white;
+  color: var(--color-text);
 }
 
 :root {
   --color-primary: #ff3b30;
+  --color-text: white;
   --color-secondary: #02763c;
   --color-bg: #008844;
   --color-tertiary: #ffd630;
@@ -18,7 +19,7 @@ h3 {
   margin: 1.5em 0 0.5em;
 }
 
-/* Global */
+/* GLOBAL */
 body {
   background: var(--color-bg);
   display: flex;
@@ -28,18 +29,71 @@ body {
   height: 100vh;
 }
 
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+footer {
+  background: var(--color-secondary);
+  border-radius: 76px;
+  padding: 1rem;
+  width: 80%;
+  margin: 0 auto 0 auto;
+  text-align: center;
+  font-weight: 100;
+  font-size: 16px;
+}
+
+/*LAYOUT*/
+.container__main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+@media (max-width: 1300px) {
+  .container__input {
+    width: 75vw;
+    height: 75vh;
+    top: auto;
+    left: auto;
+  }
+}
+
+/* COMPONENTS */
+.container-header {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  align-items: center;
+}
+
+.container-header span {
+  color: var(--color-tertiary);
+}
+
+/* - - - START WINDOW - INPUT SETTINGS - - -  */
+.container__input {
+  background: var(--color-secondary);
+  position: absolute;
+  left: 10%;
+  top: 24%;
+  height: 411px;
+  width: 59vw;
+  border-radius: 1.5rem;
+  z-index: 7;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0.954px 9.54px 9.54px 0px rgba(57, 55, 75, 0.1);
+}
 button {
   width: 176px;
   height: 56px;
-  border-radius: 76px;
-  border: 0;
-  background: var(--color-secondary);
-  font-size: 20px;
-}
-
-.button_difficulty {
-  width: 150px;
-  height: 50px;
   border-radius: 76px;
   border: 0;
   background: var(--color-secondary);
@@ -66,99 +120,31 @@ select {
   outline: none;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
+.input-player {
+  border-bottom: 3px solid white;
+  color: #0a4e14;
+  font-weight: 400;
+  font-size: 24px;
+  margin-right: 2rem;
 }
 
-footer {
-  background: var(--color-secondary);
-  border-radius: 76px;
-  padding: 1rem;
-  width: 80%;
-  margin: 0 auto 0 auto;
-  text-align: center;
-  font-weight: 100;
-  font-size: 16px;
+.input-player::placeholder {
+  color: #0a4e14;
+  font-weight: 400;
+  font-size: 24px;
 }
 
-/* Layout */
-
-.container-header {
-  display: flex;
-  justify-content: space-around;
-  flex-direction: row;
-  align-items: center;
+.container__input > button {
+  background-color: #006c32;
+  font-size: 20px;
+  width: 140px;
 }
 
-.container-header span {
-  color: var(--color-tertiary);
-}
-.button-start {
-  background: var(--color-primary);
-}
-.button-start:hover {
-  box-shadow: 0px 7px 6px 0px rgba(99, 29, 25, 0.25) inset;
+.hide-input {
+  display: none;
 }
 
-.button-off {
-  pointer-events: none;
-}
-
-.container__hearts {
-  max-height: 56px;
-}
-
-.container__main {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.container__input {
-  background: var(--color-secondary);
-  position: absolute;
-  left: 10%;
-  top: 24%;
-  height: 411px;
-  width: 59vw;
-  border-radius: 1.5rem;
-  z-index: 7;
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0.954px 9.54px 9.54px 0px rgba(57, 55, 75, 0.1);
-}
-
-.difficulty_button_container {
-  display: flex;
-  width: 40vw;
-  align-self: center;
-  justify-content: center;
-  gap: 2rem;
-}
-
-.container__buttons {
-  display: flex;
-  justify-content: center;
-}
-
-.container__buttons {
-  visibility: hidden;
-}
-
-@media (max-width: 1300px) {
-  .container__input {
-    width: 75vw;
-    height: 75vh;
-    top: auto;
-    left: auto;
-  }
-}
-
+/* - - - GAME INFO STYLE - - - */
 .small__container {
   background: var(--color-secondary);
   height: 300px;
@@ -169,7 +155,7 @@ footer {
 }
 
 .small__container h2 {
-  border-bottom: 3px solid white;
+  border-bottom: var(--color-text) 3px;
   padding: 0rem 0rem 0.5rem 0.5rem;
   border-radius: 2px;
 }
@@ -190,7 +176,7 @@ footer {
 
 .gameInfo-correct {
   font-weight: 500;
-  color: #ffe330;
+  color: var(--color-tertiary);
   padding-bottom: 1rem;
 }
 
@@ -202,10 +188,7 @@ footer {
   width: 200px;
 }
 
-.hide-input {
-  display: none;
-}
-
+/* - - - GAME OVER STYLE - - - */
 .game-over {
   flex-direction: column;
   position: absolute;
@@ -243,26 +226,7 @@ h3 {
   margin-top: 2rem;
 }
 
-.input-player {
-  border-bottom: 3px solid white;
-  color: #0a4e14;
-  font-weight: 400;
-  font-size: 24px;
-  margin-right: 2rem;
-}
-
-.input-player::placeholder {
-  color: #0a4e14;
-  font-weight: 400;
-  font-size: 24px;
-}
-
-.container__input > button {
-  background-color: #006c32;
-  font-size: 20px;
-  width: 140px;
-}
-
+/* - - - CARDS STYLE - - - */
 .container__cards {
   position: relative;
   height: 300px;
@@ -291,63 +255,35 @@ h3 {
   border-radius: 1.5rem;
 }
 
-.button-off {
-  pointer-events: none;
-  color: #d6514a;
-  background-color: #9c3832;
-  box-shadow: 0px 7px 6px 0px rgba(0, 98, 40, 0.25) inset;
-}
-
-.button-off-difficulty {
-  pointer-events: none;
-  color: #b5b5b5;
-  background-color: #0f7341;
-  box-shadow: 0px 7px 6px 0px rgba(0, 98, 40, 0.25) inset;
-}
-
-.button-off-difficulty-selected {
-  pointer-events: none;
-  color: #b5b5b5;
-  background-color: #0c5b33;
-  box-shadow: 0px 7px 6px 0px rgba(0, 98, 40, 0.25) inset;
-}
-
-.shuffle-in-progress {
-  pointer-events: none;
-}
-
-.card__front {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  backface-visibility: hidden;
-  border-radius: 1.5rem;
-  box-shadow: 1.141px 11.406px 11.406px 0px rgba(57, 55, 75, 0.1);
-}
-
+.card__front,
 .card__back {
   width: 100%;
   height: 100%;
+  position: absolute;
+  box-shadow: 1.141px 11.406px 11.406px 0px rgba(57, 55, 75, 0.1);
+}
+
+.card__front {
+  backface-visibility: hidden;
+  border-radius: 1.5rem;
+}
+
+.card__back {
   transform: rotateY(180deg);
   backface-visibility: visible;
-  position: absolute;
   backface-visibility: hidden;
-  box-shadow: 1.141px 11.406px 11.406px 0px rgba(57, 55, 75, 0.1);
 }
 
 .card--sun .card__front {
   background-image: url(./media/card__front--sun.svg);
-  background-color: var(--color-tertiary);
 }
 
 .card--rain .card__front {
   background-image: url(./media/card__front--rain.svg);
-  background-color: rgb(23, 0, 128);
 }
 
 .card--snow .card__front {
   background-image: url(./media/card__front--snow.svg);
-  background-color: rgb(0, 242, 255);
 }
 
 .card--flipped {
@@ -359,8 +295,63 @@ h3 {
   transform: rotateY(180deg);
 }
 
-/* LEADERBOARD STYLE  */
+.shuffle-in-progress {
+  pointer-events: none;
+}
 
+/* - - - GAMES MAIN BUTTONS STYLE - - - */
+.container__buttons {
+  display: flex;
+  justify-content: center;
+  visibility: hidden;
+}
+.difficulty_button_container {
+  display: flex;
+  width: 40vw;
+  align-self: center;
+  justify-content: center;
+  gap: 2rem;
+}
+.button_difficulty {
+  width: 150px;
+  height: 50px;
+  border-radius: 76px;
+  border: 0;
+  background: var(--color-secondary);
+  font-size: 20px;
+}
+
+.button-start {
+  background: var(--color-primary);
+}
+
+.button-start:hover {
+  box-shadow: 0px 7px 6px 0px rgba(99, 29, 25, 0.25) inset;
+}
+
+.button-off,
+.button-off-difficulty,
+.button-off-difficulty-selected {
+  pointer-events: none;
+  box-shadow: 0px 7px 6px 0px rgba(0, 98, 40, 0.25) inset;
+}
+
+.button-off {
+  color: #d6514a;
+  background-color: #9c3832;
+}
+
+.button-off-difficulty {
+  color: #b5b5b5;
+  background-color: #0f7341;
+}
+
+.button-off-difficulty-selected {
+  color: #b5b5b5;
+  background-color: #0c5b33;
+}
+
+/* - - - LEADERBOARD STYLE - - -  */
 .leaderBoard-li {
   margin: 0.5rem 0;
 }
