@@ -15,6 +15,9 @@ The project covers skills such as:
 - using The Web Storage to persist data;
 - using the fetch API to get data from a 3rd party.
 
+The project created for desctop view/using only.
+You can test it here: https://guessthesunnycard.netlify.app/
+
 
 
 Best regards,
