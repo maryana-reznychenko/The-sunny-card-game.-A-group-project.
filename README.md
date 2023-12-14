@@ -6,7 +6,7 @@ Maryana Reznychenko: https://github.com/maryana-reznychenko, -
 
 frontend developers students at Hyper Island school, Stockholm.
 
-The task is to create an interactive webpage to demonstrate your skills in Javascript, the possibility to work together both onsite and remotely, and collaborate on GitHub.
+The task is to create an interactive webpage to demonstrate skills in Javascript, the possibility to work together both onsite and remotely, and collaborate on GitHub.
 
 The project covers skills such as:
 - using fundamental Javascript such as variables, loops, functions, objects, and arrays;
